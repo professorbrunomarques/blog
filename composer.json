@@ -1,0 +1,20 @@
+{
+    "name": "professorbruno/blog",
+    "description": "Projeto de um Blog com parte administrativa",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.0",
+        "slim/slim": "2.0.0"
+    },
+    "license": "Free",
+    "authors": [
+        {
+            "name": "Professor Bruno Marques",
+            "email": "profbrunomarques@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Blog\\": "vendor/blog/classes/"}
+    }
+        
+}
