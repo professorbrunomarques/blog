@@ -31,4 +31,12 @@ $app->get("/add_categoria", function(){
     $resultados = $categorias->insertCat($dados);
     echo $resultados;
 });
+$app->get("/del_categoria", function(){
+    $categorias = new Blog\model\Categoria();
+    if($categorias->deleteCatById(3)){
+        echo "Categoria removida com sucesso!";
+    }else{
+        echo "Erro ao remover a categoria";
+    }
+});
 $app->run();
