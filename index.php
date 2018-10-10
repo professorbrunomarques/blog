@@ -10,13 +10,13 @@ $app->get('/', function(){
 
 });
 $app->get("/categorias", function(){
-    $categorias = new Blog\DB\Categoria();
+    $categorias = new Blog\model\Categoria();
     //$resultados = $categorias->getAllCat();
-    $resultados = $categorias->getById(1);
+    $resultados = $categorias->getAllCat();
     echo json_encode($resultados);
 });
 $app->get("/categoria/:nome", function($nome){
-    $categorias = new Blog\DB\Categoria();
+    $categorias = new Blog\model\Categoria();
     //$resultados = $categorias->getAllCat();
     $resultados = $categorias->getCatByName($nome);
     echo json_encode($resultados);

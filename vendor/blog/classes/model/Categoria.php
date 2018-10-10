@@ -41,7 +41,7 @@ class Categoria {
             return "Nenhum registro encontrado.";
         }
     }
-    public function insertCat($dados = array()) {
+    public function insertCat($dados = array()):array {
         $this->cat_name = $dados["cat_name"];
         $this->cat_titulo = $dados["cat_titulo"];
         $this->cat_parent = $dados["cat_parent"];
@@ -51,7 +51,16 @@ class Categoria {
             ":cat_titulo"=> $this->getCat_titulo(),
             ":cat_parent"=> $this->getCat_parent()
         ));
-        return "A categoria ".$this->getCat_titulo(). " foi cadastrada com sucesso!";
+
+        return $this->getCatByName($this->getCat_name);
+    }
+    public function deleteCatById($id){
+
+        $sql = new \Blog\DB\Sql();
+        $resultado = $sql->select("DELETE FROM categorias WHERE id_cat = :valor",array(
+            ":valor"=>$id
+        ));
+        return true;
     }
 
 

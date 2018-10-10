@@ -69,7 +69,7 @@ class Sql {
         if ($stmt->errorInfo()[2] != NULL) {
             return $stmt->errorInfo();
         } else {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
     }
 
