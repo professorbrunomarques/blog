@@ -13,12 +13,14 @@ E o uso do código é aberto para todos.
 Ferramentas usadas:<br>
 - Composer https://github.com/composer/composer
 - Slim Framework v2 https://github.com/slimphp/Slim
+- Rain Tpl https://github.com/feulf/raintpl
 - outros ao decorrer do projeto.
 
 Att,
 Professor Bruno Marques
 
 ===========================================================================
+
 Base project for building a blog using PHP.
 
 Project prepared in the classroom with FAETEC students - Marechal Hermes - RJ
@@ -33,6 +35,7 @@ And the use of the code is open to everyone.
 Tools used:
 - Composer https://github.com/composer/composer
 - Slim Framework v2 https://github.com/slimphp/Slim
+- Rain Tpl https://github.com/feulf/raintpl
 - others during the project.
 
 Att,
