@@ -16,12 +16,12 @@ class Page {
      * Método contrutor que irá criar o Header do Template View.
      * Este médodo 
      */
-    public function __construct($opts = array()){
+    public function __construct($opts = array(), $tpl_dir = "./views/"){
         //Casso seja enviada as opções, será feito o merge do default com o que foi enviado em $opts.
         //Essas $opts são variáveis que serão substituidas no HTML nesse formato {$nome}
         $this->options = array_merge($this->defaults, $opts);
 	    $config = array(
-            "tpl_dir"       => "./views/",
+            "tpl_dir"       => $tpl_dir,
             "cache_dir"     => "./views-cache/",
             "debug"         => false // set to false to improve the speed
         );
