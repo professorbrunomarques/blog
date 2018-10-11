@@ -4,7 +4,9 @@
     font-family: "Candara", verdana, sans-serif;
     box-sizing: border-box;
 }
-.clear{clear: both;}
+
+.clearfix::after, .clearfix::before{display:table; content: " ";}
+.clearfix::after{clear: both;}
 .font-zero{font-size: 0; float: left;}
 .content{width: 90%; margin: 0 auto;}
 

@@ -11,7 +11,7 @@ class Page {
     private $defaults = [
         "data"=>[]
     ];
-
+    
     /**
      * Método contrutor que irá criar o Header do Template View.
      * Este médodo 
@@ -21,11 +21,11 @@ class Page {
         //Essas $opts são variáveis que serão substituidas no HTML nesse formato {$nome}
         $this->options = array_merge($this->defaults, $opts);
 	    $config = array(
-            "tpl_dir"       => $_SERVER["DOCUMENT_ROOT"]."/views/",
-            "cache_dir"     => $_SERVER["DOCUMENT_ROOT"]."/views-cache/",
+            "tpl_dir"       => "./views/",
+            "cache_dir"     => "./views-cache/",
             "debug"         => false // set to false to improve the speed
         );
-
+        
         Tpl::configure( $config );
         $this->tpl = new Tpl;
         $this->setData($this->options["data"]);
