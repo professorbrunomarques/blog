@@ -48,7 +48,7 @@ $app->get('/admin/logout', function() {
 });
 
 $app->get('/admin/users', function(){
-    
+    User::verifyLogin();
     $page = new PageAdmin();
     $page->setTpl("users");
 
