@@ -9,6 +9,8 @@ class Page {
     private $options = [];
     //Valor padrão caso não seja passado $opts
     private $defaults = [
+        "header" => true,
+        "footer" => true,
         "data"=>[]
     ];
     
@@ -29,8 +31,9 @@ class Page {
         Tpl::configure( $config );
         $this->tpl = new Tpl;
         $this->setData($this->options["data"]);
+        
         //Desenha o template do header.html, que está na pasta views e renderiza na tela.
-        $this->tpl->draw("header");
+        if($this->options["header"] === true) $this->tpl->draw("header");
         
     }
     private function setData($data = array ())
@@ -55,6 +58,6 @@ class Page {
 
     public function __destruct(){
         //Desenha o template do footer.html, que está na pasta views e renderiza na tela.
-        $this->tpl->draw("footer");
+        if($this->options["footer"] === true) $this->tpl->draw("footer");
     }
 }
