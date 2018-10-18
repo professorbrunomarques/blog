@@ -69,6 +69,12 @@ class User extends Model {
 
 	}
 
+	public static function listAll()
+	{
+		$sql = new Sql;
+		return $sql->select("SELECT * FROM tb_users ORDER BY id_user ASC");
+	}
+
 }
 
  ?>
