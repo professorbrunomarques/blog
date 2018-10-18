@@ -54,6 +54,31 @@ $app->get('/admin/users', function(){
     $page->setTpl("users", array(
         "users"=>$users
     ));
+});
+
+
+
+$app->get('/admin/users/create', function(){
+    User::verifyLogin();
+
+    $page = new PageAdmin();
+    $page->setTpl("users-create");
+});
+
+$app->post('/admin/users/create', function(){
+    User::verifyLogin();
+    $user = User::save($_POST);
+    header("location: /admin/users");
+    exit();
+});
+
+$app->get('/admin/users/:id_user', function($id_user){
+    User::verifyLogin();
+    $user = User::getUserById($id_user);
+    $page = new PageAdmin();
+    $page->setTpl("users-update", array(
+        "user"=>$user[0]
+    ));
 
 });
 

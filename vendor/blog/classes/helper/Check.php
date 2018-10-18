@@ -25,4 +25,19 @@ class Check {
 
         return strtolower(utf8_encode(self::$Data));
     }
+    /**
+     * <b>Verifica E-mail:</b> Executa validação de formato de e-mail. Se for um email válido retorna true, ou retorna false.
+     * @param STRING $Email = Uma conta de e-mail
+     * @return BOOL = True para um email válido, ou false
+     */
+    public static function email(string $email) {
+        self::$Data = $email;
+        self::$Format = '/[a-z0-9_\.\-]+@[a-z0-9_\.\-]*[a-z0-9_\.\-]+\.[a-z]{2,4}$/';
+
+        if (preg_match(self::$Format, self::$Data)):
+            return TRUE;
+        else:
+            return FALSE;
+        endif;
+    }
 }

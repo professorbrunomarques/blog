@@ -3,6 +3,7 @@
 namespace Blog\Model;
 
 use \Blog\Model;
+use \Blog\helper\Check;
 use \Blog\DB\Sql;
 
 class User extends Model {
@@ -73,6 +74,33 @@ class User extends Model {
 	{
 		$sql = new Sql;
 		return $sql->select("SELECT * FROM tb_users ORDER BY id_user ASC");
+	}
+
+	public static function save($data = array())
+	{
+		$data = array_map("strip_tags", $data);
+		$data = array_map("trim", $data);
+		$data["email"] = strtolower($data["email"]);
+		if(!Check::email($data["email"])){
+			return false;
+		}
+		$data["password"] = password_hash($data["password"],PASSWORD_DEFAULT);
+		
+		$sql = new Sql;
+		return $sql->query("INSERT INTO tb_users (id_user, login, password, name, level, email) VALUES (NULL, :login, :password, :name, :level, :email)", array(
+			":login"=>$data["login"],
+			":password"=>$data["password"],
+			":name"=>$data["name"],
+			":level"=>$data["level"],
+			":email"=>$data["email"]
+		));
+	}
+
+	public static function getUserById($id_user){
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM tb_users WHERE id_user = :id_user", array(
+			":id_user"=>$id_user
+		));
 	}
 
 }
