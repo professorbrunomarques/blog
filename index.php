@@ -6,7 +6,7 @@ require_once './vendor/autoload.php';
 use \Slim\Slim;
 use \Blog\Page;
 use \Blog\PageAdmin;
-use \Blog\Model\User;
+use \Blog\model\User;
 
 $app = new \Slim\Slim();
 $app->get('/', function(){
