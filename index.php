@@ -65,7 +65,7 @@ $app->get('/admin/users/create', function(){
 $app->post('/admin/users/create', function(){
     User::verifyLogin();
     $data = User::save($_POST);
-    if(isset($data) && $data["error"]){
+    if(is_array($data)){
         $page = new PageAdmin();
         $page->setTpl("users-create-error", array(
             "data"=>$data
@@ -84,5 +84,10 @@ $app->get('/admin/users/:id_user', function($id_user){
         "user"=>$user[0]
     ));
 });
-
+$app->get('/admin/users/:id_user/delete', function($id_user){
+    User::verifyLogin();
+    $user = User::deleteUserById($id_user);
+    header("location: /admin/users");
+    exit();
+});
 $app->run();

@@ -105,6 +105,12 @@ class User extends Model {
 			":id_user"=>$id_user
 		));
 	}
+	public static function deleteUserById($id_user){
+		$sql = new Sql();
+		return $sql->query("DELETE FROM tb_users WHERE id_user = :id_user", array(
+			":id_user"=>$id_user
+		));
+	}
 
 }
 
