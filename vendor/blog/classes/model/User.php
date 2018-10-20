@@ -81,12 +81,14 @@ class User extends Model {
 		$data = array_map("strip_tags", $data);
 		$data = array_map("trim", $data);
 		$data["email"] = strtolower($data["email"]);
-		if(!Check::email($data["email"])){
-			throw new \Exception("O email informado é inválido! Retorne a página anterior");
-		}
 		$data["password"] = password_hash($data["password"],PASSWORD_DEFAULT,["code"=>12]);
 		$data["level"] = (isset($data["level"])) ? 1 : 0;
-
+		if(!Check::email($data["email"])){
+			//throw new \Exception("O email informado é inválido! Retorne a página anterior");
+			$data["error"] = true;
+			return $data;
+			exit;
+		}
 		$sql = new Sql;
 		return $sql->query("INSERT INTO tb_users (id_user, login, password, name, level, email) VALUES (NULL, :login, :password, :name, :level, :email)", array(
 			":login"=>$data["login"],
