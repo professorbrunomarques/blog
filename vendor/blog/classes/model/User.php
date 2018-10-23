@@ -76,26 +76,34 @@ class User extends Model {
 		return $sql->select("SELECT * FROM tb_users ORDER BY id_user ASC");
 	}
 
-	public static function save($data = array())
-	{
-		$data = array_map("strip_tags", $data);
-		$data = array_map("trim", $data);
-		$data["email"] = strtolower($data["email"]);
-		$data["password"] = password_hash($data["password"],PASSWORD_DEFAULT,["code"=>12]);
-		$data["level"] = (isset($data["level"])) ? 1 : 0;
-		if(!Check::email($data["email"])){
-			//throw new \Exception("O email informado é inválido! Retorne a página anterior");
-			$data["error"] = true;
-			return $data;
-			exit;
-		}
+	public function save($data = array())
+	{	
+		//Cria os metodos sets automaticamente
+		$user = new User();
+		$user->setData($data);
+
 		$sql = new Sql;
 		return $sql->query("INSERT INTO tb_users (id_user, login, password, name, level, email) VALUES (NULL, :login, :password, :name, :level, :email)", array(
-			":login"=>$data["login"],
-			":password"=>$data["password"],
-			":name"=>$data["name"],
-			":level"=>$data["level"],
-			":email"=>$data["email"]
+			":login"=>$user->getlogin(),
+			":password"=>$user->getpassword(),
+			":name"=>$user->getname(),
+			":level"=>$user->getlevel(),
+			":email"=>$user->getemail()
+		));
+	}
+	public function update($data = array(), int $id_user)
+	{	
+		//Cria os metodos sets automaticamente
+		$user = new User();
+		$user->setData($data);
+
+		$sql = new Sql;
+		return $sql->query("UPDATE tb_users set login = :login, name = :name, level = :level , email = :email WHERE id_user = :id_user", array(
+			":login"=>$user->getlogin(),
+			":name"=>$user->getname(),
+			":level"=>$user->getlevel(),
+			":email"=>$user->getemail(),
+			":id_user"=>$id_user
 		));
 	}
 
