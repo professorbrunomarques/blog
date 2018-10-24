@@ -7,6 +7,7 @@ use \Slim\Slim;
 use \Blog\Page;
 use \Blog\PageAdmin;
 use \Blog\model\User;
+use \Blog\model\Post;
 use \Blog\helper\Check;
 
 $app = new \Slim\Slim();
@@ -123,7 +124,10 @@ $app->get('/admin/users/:id_user/delete', function($id_user){
 $app->get('/admin/posts', function(){
     User::verifyLogin();
     $page = new PageAdmin();
-    $page->setTpl("posts");
+    $posts = Post::listAll();
+    $page->setTpl("posts", array(
+        "posts"=>$posts
+    ));
 });
 //POST CREATE
 $app->get('/admin/posts/create', function(){

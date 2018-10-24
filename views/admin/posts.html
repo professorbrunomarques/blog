@@ -40,16 +40,18 @@
                                 <th style="width: 100px">Status</th>
                                 <th style="width: 140px">&nbsp;</th>
                             </tr>
+                            {loop="$posts"}
                             <tr>
-                                <td>183</td>
-                                <td>John Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="label label-success">Ativo</span><span class="label label-danger">Inativo</span></td>
+                                <td>{$value.post_id}</td>
+                                <td>{$value.post_title}</td>
+                                <td>{function="date('d/m/Y H:i:s',strtotime($value.post_date))"}</td>
+                                <td>{if="$value.post_status"}<span class="label label-success">Ativo</span>{else}<span class="label label-danger">Inativo</span>{/if}</td>
                                 <td>
-                                    <a href="/admin/posts/$value.id_post" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
-                                    <a href="/admin/posts/$value.id_post/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
+                                    <a href="/admin/posts/{$value.post_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
+                                    <a href="/admin/posts/{$value.post_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>
                                 </td>
                             </tr>
+                            {/loop}
                         </table>
                     </div>
                     <!-- /.box-body -->
