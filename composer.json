@@ -5,7 +5,8 @@
     "require": {
         "phpmailer/phpmailer": "^6.0",
         "slim/slim": "2.0.0",
-        "rain/raintpl":"3.0.0"
+        "rain/raintpl":"3.0.0",
+        "gabrielgil/timthumb": "2.*"
     },
     "license": "Free",
     "authors": [

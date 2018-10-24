@@ -45,12 +45,17 @@ class ComposerStaticInite754b3a997e8acb3879509f8b389380a
         ),
     );
 
+    public static $classMap = array (
+        'timthumb' => __DIR__ . '/..' . '/gabrielgil/timthumb/timthumb.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite754b3a997e8acb3879509f8b389380a::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite754b3a997e8acb3879509f8b389380a::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInite754b3a997e8acb3879509f8b389380a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite754b3a997e8acb3879509f8b389380a::$classMap;
 
         }, null, ClassLoader::class);
     }

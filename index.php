@@ -152,7 +152,6 @@ $app->post('/admin/posts/create', function(){
     unset($data["_wysihtml5_mode"]);
     $post = new Post();
     $post->setData($data);
-    var_dump($post);
     $post->save();
     header("Location: /admin/posts");
     exit();
@@ -161,8 +160,19 @@ $app->post('/admin/posts/create', function(){
 //POST UPDATE
 $app->get('/admin/posts/:post_id', function($post_id){
     User::verifyLogin();
+    $post = Post::getPostById($post_id);
+    $categorys = Category::listAll();
     $page = new PageAdmin();
-    $page->setTpl("posts-update");
+    $page->setTpl("posts-update", array(
+        "post"=>$post[0],
+        "categorys"=>$categorys
+    ));
 });
+$app->post('/admin/posts/:post_id', function($post_id){
+    User::verifyLogin();
+   
+    
+});
+
 
 $app->run();

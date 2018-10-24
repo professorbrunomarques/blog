@@ -16,6 +16,15 @@ class Post extends Model {
         $sql = new Sql;
         return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC");
     }
+
+    public static function getPostById(int $post_id)
+    {
+        $sql = new Sql;
+        return $sql->select("SELECT * FROM tb_posts WHERE post_id = :post_id", array(
+            ":post_id"=>$post_id
+        ));
+    }
+
     public function save()
     {
         $imagem = $_FILES["post_image"];

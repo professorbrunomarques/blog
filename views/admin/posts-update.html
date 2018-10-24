@@ -19,7 +19,7 @@
   	<div class="col-md-12">
   		<div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Editar Postagem</h3>
+          <h3 class="box-title">Nova Postagem</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -27,31 +27,49 @@
           <div class="box-body">
             <div class="form-group">
               <label for="post_title">Titulo da postagem</label>
-              <input type="text" class="form-control" id="post_title" name="post_title" placeholder="Digite título da postagem" required>
+              <input type="text" class="form-control" id="post_title" name="post_title" value="{$post.post_title}" placeholder="Digite título da postagem" required>
+            </div>
+            <div class="row form-group">
+            <div class="col-md-6">
+              <label for="cat_id">Categoria</label>
+              <select name="cat_id" class="form-control" required>
+                {loop="$categorys"}
+                <option value="{$value.cat_id}" {if="$value.cat_id = $post.cat_id"}selected{/if}>{$value.cat_title}</option>
+                {/loop}
+              </select>
+            </div>
+            <div class="col-md-6">
+                <label for="post_author">Autor</label>
+                <input type="text" class="form-control" id="post_author" name="post_author" value="{$name}" readonly>
+            </div>
             </div>
             <div class="form-group">
-              <label for="login">Login</label>
-              <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login" required>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputFile">Imagem de destaque do post</label>
+              <label for="post_image">Imagem de destaque do post</label>
+              <div class="box box-solid box-default">
+                  <div class="box-header">
+                      Imagem atual
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post.post_image}&w=300" alt="{$post.post_title}">
+                  </div><!-- /.box-body -->
+              </div>
               <input type="file" id="post_image" name="post_image">
               <p class="help-block">Apenas imagens (jpg, bmp, png, gif).</p>
             </div>
 
             <div class="form-group">
               <label for="post_text">Texto da postagem</label>
-                <textarea name="post_text" class="textarea" placeholder="Digite aqui o texto da postagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                <textarea name="post_text" class="textarea" placeholder="Digite aqui o texto da postagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$post.post_text}</textarea>
             </div>
             <div class="form-group">
               <label>
-                <input type="checkbox" name="post_status" class="minimal" value="1"> Exibir postagem
+                <input type="checkbox" name="post_status" class="minimal" value="1" {if="$post.post_status"}checked{/if}> Exibir postagem
               </label>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success">Alterar</button>
           </div>
         </form>
       </div>

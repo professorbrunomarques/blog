@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b51991fe54d23023b2d863e90fb66dde",
+    "content-hash": "35cb4e8eb1e72dfac9b3c8478206b7f6",
     "packages": [
+        {
+            "name": "gabrielgil/timthumb",
+            "version": "2.8.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GabrielGil/TimThumb.git",
+                "reference": "564c00058271147af32da8ac665c00f6a1c4ac29"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GabrielGil/TimThumb/zipball/564c00058271147af32da8ac665c00f6a1c4ac29",
+                "reference": "564c00058271147af32da8ac665c00f6a1c4ac29",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Gil",
+                    "email": "hello@gabrielgil.es"
+                }
+            ],
+            "description": "TimThumb is a simple, flexible, PHP script that resizes images.",
+            "time": "2014-07-17T08:57:16+00:00"
+        },
         {
             "name": "phpmailer/phpmailer",
             "version": "v6.0.5",
