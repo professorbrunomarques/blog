@@ -1,3 +1,4 @@
 /views-cache/
 /uploads/
-vendor/blog/classes/DB/Sql.php
+/vendor/blog/classes/DB/Sql.php
+.gitignore
