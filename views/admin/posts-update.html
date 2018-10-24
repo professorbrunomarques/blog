@@ -1,0 +1,64 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Postagens
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/admin/posts">Postagens</a></li>
+    <li class="active"><a href="/admin/posts/create">Cadastrar</a></li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+  	<div class="col-md-12">
+  		<div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Editar Postagem</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" action="/admin/posts/create" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="post_title">Titulo da postagem</label>
+              <input type="text" class="form-control" id="post_title" name="post_title" placeholder="Digite título da postagem" required>
+            </div>
+            <div class="form-group">
+              <label for="login">Login</label>
+              <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputFile">Imagem de destaque do post</label>
+              <input type="file" id="post_image" name="post_image">
+              <p class="help-block">Apenas imagens (jpg, bmp, png, gif).</p>
+            </div>
+
+            <div class="form-group">
+              <label for="post_text">Texto da postagem</label>
+                <textarea name="post_text" class="textarea" placeholder="Digite aqui o texto da postagem..." style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="post_status" class="minimal" value="1"> Exibir postagem
+              </label>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-success">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+  	</div>
+  </div>
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

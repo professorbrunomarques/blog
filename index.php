@@ -125,5 +125,18 @@ $app->get('/admin/posts', function(){
     $page = new PageAdmin();
     $page->setTpl("posts");
 });
+//POST CREATE
+$app->get('/admin/posts/create', function(){
+    User::verifyLogin();
+    $page = new PageAdmin();
+    $page->setTpl("posts-create");
+});
+
+//POST UPDATE
+$app->get('/admin/posts/:post_id', function($post_id){
+    User::verifyLogin();
+    $page = new PageAdmin();
+    $page->setTpl("posts-update");
+});
 
 $app->run();
