@@ -110,10 +110,20 @@ $app->post('/admin/users/:id_user', function($id_user){
     exit();
 });
 
+//USER DELETE
 $app->get('/admin/users/:id_user/delete', function($id_user){
     User::verifyLogin();
     $user = User::deleteUserById($id_user);
     header("location: /admin/users");
     exit();
 });
+
+
+//POST LIST
+$app->get('/admin/posts', function(){
+    User::verifyLogin();
+    $page = new PageAdmin();
+    $page->setTpl("posts");
+});
+
 $app->run();
