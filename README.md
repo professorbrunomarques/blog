@@ -14,6 +14,7 @@ Ferramentas usadas:<br>
 - Composer https://github.com/composer/composer
 - Slim Framework v2 https://github.com/slimphp/Slim
 - Rain Tpl https://github.com/feulf/raintpl
+- TimThumb https://github.com/GabrielGil/TimThumb
 - outros ao decorrer do projeto.
 
 Att,
@@ -36,6 +37,7 @@ Tools used:
 - Composer https://github.com/composer/composer
 - Slim Framework v2 https://github.com/slimphp/Slim
 - Rain Tpl https://github.com/feulf/raintpl
+- TimThumb https://github.com/GabrielGil/TimThumb
 - others during the project.
 
 Att,
