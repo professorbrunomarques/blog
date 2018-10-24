@@ -8,6 +8,7 @@ use \Blog\Page;
 use \Blog\PageAdmin;
 use \Blog\model\User;
 use \Blog\model\Post;
+use \Blog\model\Category;
 use \Blog\helper\Check;
 
 $app = new \Slim\Slim();
@@ -132,8 +133,29 @@ $app->get('/admin/posts', function(){
 //POST CREATE
 $app->get('/admin/posts/create', function(){
     User::verifyLogin();
+    $categorys = Category::listAll();
     $page = new PageAdmin();
-    $page->setTpl("posts-create");
+    $page->setTpl("posts-create", array(
+        "categorys"=>$categorys
+    ));
+});
+
+$app->post('/admin/posts/create', function(){
+    User::verifyLogin();
+    $data = $_POST;
+    $post_texto = $data["post_text"];
+    $data = array_map("strip_tags", $data);
+    $data = array_map("trim", $data);
+    $data["post_name"] = Check::Name($data["post_title"]);
+    $data["post_text"] = $post_texto;
+    $data["post_status"] = (isset($data["post_status"])) ? 1 : 0;
+    unset($data["_wysihtml5_mode"]);
+    $post = new Post();
+    $post->setData($data);
+    var_dump($post);
+    $post->save();
+    header("Location: /admin/posts");
+    exit();
 });
 
 //POST UPDATE
