@@ -12,7 +12,14 @@ class Upload
     private static $Dados;
     private static $Data;
     private static $Format;
-    
+    /**
+     * Faz o upload de uma imagem
+     * 
+     * @param file $file = Arquivo vindo do formulário
+     * @param string $filename = Nome que o arquivo terá após o upload
+     * 
+     * @return string Com o caminho completo da imagem
+     */
     public function image($file, $filename = null){
         $this->File = $file;
         $this->Max_file_size = pow(1024, 2)*2; // Tamanho máximo para upload 2Mb 

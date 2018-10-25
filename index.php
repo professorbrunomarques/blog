@@ -142,12 +142,18 @@ $app->get('/admin/posts/create', function(){
 
 $app->post('/admin/posts/create', function(){
     User::verifyLogin();
+    //Armazena na variável data o conteúdo do formulário
     $data = $_POST;
+    //Armazenar na variável o conteudo do POST_TEXT, evitando a remoção das tags
     $post_texto = $data["post_text"];
+    //Remove tags e espaços vazios
     $data = array_map("strip_tags", $data);
     $data = array_map("trim", $data);
+    //Acrecentando o campo POST_NAME porém no formato URI
     $data["post_name"] = Check::Name($data["post_title"]);
+    //Retorno o conteúdo original do POST_TEXT
     $data["post_text"] = $post_texto;
+    //Verifica se a caixa para exibição do post foi ativada.
     $data["post_status"] = (isset($data["post_status"])) ? 1 : 0;
     unset($data["_wysihtml5_mode"]);
     $post = new Post();
@@ -170,9 +176,64 @@ $app->get('/admin/posts/:post_id', function($post_id){
 });
 $app->post('/admin/posts/:post_id', function($post_id){
     User::verifyLogin();
-   
+    //Armazena na variável data o conteúdo do formulário
+    $data = $_POST;
+    //Armazenar na variável o conteudo do POST_TEXT, evitando a remoção das tags
+    $post_texto = $data["post_text"];
+    //Remove tags e espaços vazios
+    $data = array_map("strip_tags", $data);
+    $data = array_map("trim", $data);
+    //Acrecentando o campo POST_NAME porém no formato URI
+    $data["post_name"] = Check::Name($data["post_title"]);
+    //Retorno o conteúdo original do POST_TEXT
+    $data["post_text"] = $post_texto;
+    //Verifica se a caixa para exibição do post foi ativada.
+    $data["post_status"] = (isset($data["post_status"])) ? 1 : 0;
+    unset($data["_wysihtml5_mode"]);
+    $post = new Post();
+    $post->setData($data);
+    $post->update($post_id);
+    header("Location: /admin/posts");
+    exit();
     
 });
+//POST DELETE
+$app->get('/admin/posts/:post_id/delete', function($post_id){
+    User::verifyLogin();
+    $res = Post::delete($post_id);
+    header("Location: /admin/posts");
+    exit();
+});
+//CATEGORIES SELECT
+$app->get('/admin/categories', function(){
+    User::verifyLogin();
+    $categories = Category::listAll();
+    $page = new PageAdmin();
+    $page->setTpl('categories', array(
+        "categories"=>$categories
+    ));
+});
 
+//CATEGORIES CREATE
+$app->get('/admin/categories/create', function(){
+    User::verifyLogin();
+    $categories = Category::listAll();
+    $page = new PageAdmin();
+    $page->setTpl('categories-create', array(
+        "categories"=>$categories
+    ));
+});
+
+//CATEGORIES UPDATE
+$app->get('/admin/categories/:cat_id', function($cat_id){
+    User::verifyLogin();
+    $categories = Category::listAll();
+    $category = Category::getById($cat_id);
+    $page = new PageAdmin();
+    $page->setTpl('categories-update', array(
+        "categories"=>$categories,
+        "category"=>$category
+    ));
+});
 
 $app->run();
