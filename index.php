@@ -223,6 +223,17 @@ $app->get('/admin/categories/create', function(){
         "categories"=>$categories
     ));
 });
+$app->post('/admin/categories/create', function(){
+    User::verifyLogin();
+    $data = $_POST;
+    $data["cat_name"] = Check::Name($data["cat_title"]);
+    $cat = new Category();
+    $cat->setData($data);
+    $cat->save();
+    header("Location: /admin/categories");
+    exit();
+
+});
 
 //CATEGORIES UPDATE
 $app->get('/admin/categories/:cat_id', function($cat_id){
@@ -234,6 +245,16 @@ $app->get('/admin/categories/:cat_id', function($cat_id){
         "categories"=>$categories,
         "category"=>$category
     ));
+});
+$app->post('/admin/categories/:cat_id', function($cat_id){
+    User::verifyLogin();
+    $data = $_POST;
+    $data["cat_name"] = Check::Name($data["cat_title"]);
+    $cat = new Category();
+    $cat->setData($data);
+    $cat->update($cat_id);
+    header("Location: /admin/categories");
+    exit();
 });
 
 $app->run();

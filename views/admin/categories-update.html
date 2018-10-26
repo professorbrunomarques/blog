@@ -23,7 +23,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" action="/admin/categoria/" method="post">
+        <form role="form" action="/admin/categories/{$category.cat_id}" method="post">
           <div class="box-body">
             <div class="form-group">
               <label for="cat_title">Nome da Categoria</label>
@@ -36,8 +36,9 @@
             <div class="form-group">
                 <label for="cat_parent">Categoria principal</label>
                 <select name="cat_parent" class="form-control" required>
+                    <option value="0">Esta será a principal</option>                  
                     {loop="$categories"}
-                    <option value="{$value.cat_id}" {if="$value.cat_id=$category.cat_parent"}Selected{/if}>{$value.cat_title}</option>
+                    <option value="{$value.cat_id}" {if="$value.cat_id===$category.cat_parent"}Selected{/if}>{$value.cat_title}</option>
                     {/loop}
                 </select>
             </div>
