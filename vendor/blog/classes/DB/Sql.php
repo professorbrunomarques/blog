@@ -12,8 +12,8 @@ class Sql {
 
 	// Constantes para conexao ao banco de dados
 	const HOSTNAME = "127.0.0.1";
-	const USERNAME = "bruno";
-	const PASSWORD = "b007m004";
+	const USERNAME = "root";
+	const PASSWORD = "";
 	const DBNAME = "aulasphp";
 
 	private $conn;
