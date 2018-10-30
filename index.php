@@ -256,7 +256,14 @@ $app->post('/admin/categories/:cat_id', function($cat_id){
     header("Location: /admin/categories");
     exit();
 });
-
+//CATEGORIES DELETE
+$app->get('/admin/categories/:cat_id/delete', function($cat_id)
+{
+    User::verifyLogin();
+    $result = Category::deleteCatById((int)$cat_id);
+    header("Location: /admin/categories");
+    exit();
+});
 
 // FORGOT
 $app->get('/admin/forgot', function(){
@@ -290,13 +297,32 @@ $app->get('/admin/forgot/sent', function(){
 $app->get('/admin/forgot/reset', function(){
     
     $user = User::validForgotDecrypt($_GET["code"]);
-    var_dump($user);
-    exit();
+
     $page = new PageAdmin([
         "header"=>false,
         "footer"=>false
     ]);
 
-    $page->setTpl("forgot-reset");
+    $page->setTpl("forgot-reset", array(
+        "name"=>$user["name"],
+        "code"=>$_GET["code"]
+    ));
 });
+$app->post('/admin/forgot/reset', function(){
+    $forgot = User::validForgotDecrypt($_POST["code"]);
+
+    User::setForgotUsed($forgot["idrecovery"]);
+
+    $user = new User();
+    $user->get((int)$forgot["id_user"]);
+    $user->setPassword($_POST["password"]);
+
+    $page = new PageAdmin([
+        "header"=>false,
+        "footer"=>false
+    ]);
+
+    $page->setTpl("forgot-reset-success");
+});
+
 $app->run();

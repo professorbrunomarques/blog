@@ -110,10 +110,19 @@ class User extends Model {
 	}
 
 	public static function getUserById($id_user){
+		
 		$sql = new Sql();
 		return $sql->select("SELECT * FROM tb_users WHERE id_user = :id_user", array(
 			":id_user"=>$id_user
 		));
+	}
+	public function get($id_user){
+		
+		$sql = new Sql();
+		$res = $sql->select("SELECT * FROM tb_users WHERE id_user = :id_user", array(
+			":id_user"=>$id_user
+		));
+		$this->setData($res[0]);
 	}
 	public static function deleteUserById($id_user){
 		$sql = new Sql();
@@ -132,7 +141,7 @@ class User extends Model {
 			throw new \Exception("Não foi possível recuperar sua senha");			
 		}else{
 			$data = $result[0];
-
+			
 			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :user_ip);", array(
 				":iduser"=>$data["id_user"],
 				":user_ip"=>$_SERVER["REMOTE_ADDR"]
@@ -150,7 +159,7 @@ class User extends Model {
 
 				$result = base64_encode($IV.$code);
 				
-				$link = "http://localhost/admin/forgot/reset?code=$result";
+				$link = "http://www.blog.com.br/admin/forgot/reset?code=$result";
 
 				$mailer = new Mailer($data["email"], $data["name"], "Redefinir Senha do Blog", "forgot", array(
 					"name"=> $data["name"],
@@ -170,9 +179,42 @@ class User extends Model {
 		$code = mb_substr($result, openssl_cipher_iv_length('aes-256-cbc'), null, '8bit');
 		$iv = mb_substr($result, 0, openssl_cipher_iv_length('aes-256-cbc'), '8bit');
 		$idrecovery = openssl_decrypt($code, 'aes-256-cbc', User::SECRET, 0, $iv);
-		return $idrecovery;
+		
+		$sql = new Sql();
+		$results = $sql->select("
+		SELECT *
+		FROM tb_userspasswordsrecoveries a
+		INNER JOIN tb_users b USING(id_user) 
+		WHERE a.idrecovery = :idrecovery 
+		AND a.dtrecovery IS NULL AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
+		", array(
+			":idrecovery"=>$idrecovery
+		));
+		
+		if(count($results) === 0){
+			throw new \Exception("Não foi possível recuperar a senha.");
+		}else{
+			return $results[0];
+		}
+
+	}
+	public static function setForgotUsed($idrecovery)
+	{
+		$sql = new Sql();
+		$sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery",array(
+			":idrecovery"=>$idrecovery
+		));
 	}
 
+	public function setPassword($password)
+	{
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_users SET password = :password WHERE id_user = :id_user", array(
+			":password"=>password_hash($password, PASSWORD_DEFAULT, ["coast"=>12]),
+			":id_user"=>$this->getid_user()
+		));
+	}
 }
 
  ?>
