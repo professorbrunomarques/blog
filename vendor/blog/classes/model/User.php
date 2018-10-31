@@ -76,19 +76,19 @@ class User extends Model {
 		return $sql->select("SELECT * FROM tb_users ORDER BY id_user ASC");
 	}
 
-	public function save($data = array())
+	public function save()
 	{	
 		//Cria os metodos sets automaticamente
-		$user = new User();
-		$user->setData($data);
+		//$user = new User();
+		//$user->setData($data);
 
 		$sql = new Sql;
 		return $sql->query("INSERT INTO tb_users (id_user, login, password, name, level, email) VALUES (NULL, :login, :password, :name, :level, :email)", array(
-			":login"=>$user->getlogin(),
-			":password"=>$user->getpassword(),
-			":name"=>$user->getname(),
-			":level"=>$user->getlevel(),
-			":email"=>$user->getemail()
+			":login"=>$this->getlogin(),
+			":password"=>$this->getpassword(),
+			":name"=>$this->getname(),
+			":level"=>$this->getlevel(),
+			":email"=>$this->getemail()
 		));
 	}
 	public function update($data = array(), int $id_user)

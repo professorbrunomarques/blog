@@ -77,9 +77,10 @@ $app->post('/admin/users/create', function(){
     if(!Check::email($data["email"])){
         throw new \Exception("formato do e-mail é inválido!");
     }
+    
     $user = new User();
-    $data = User::save($data);
-        
+	$user->setData($data);
+    $user->save();        
     header("location: /admin/users");
     exit();
 });
