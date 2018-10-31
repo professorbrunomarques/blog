@@ -73,7 +73,7 @@ class Category extends Model {
             ":cat_desc"=>$this->getcat_desc(),
             ":cat_parent"=>$this->getcat_parent()
         ));
-        
+        Category::updateFile();
     }
     /**
      * Atualiza os dados de uma categoria
@@ -89,7 +89,7 @@ class Category extends Model {
             ":cat_desc"=>$this->getcat_desc(),
             ":cat_parent"=>$this->getcat_parent()
         ));
-        
+        Category::updateFile();
     }
 
     /**
@@ -103,10 +103,21 @@ class Category extends Model {
         $resultado = $sql->query("DELETE FROM tb_categories WHERE cat_id = :valor",array(
             ":valor"=>$id
         ));
+        Category::updateFile();
         return true;
     }
 
+    public static function updateFile()
+    {
+        $categories = Category::listAll();
+        $html = [];
 
+        foreach ($categories as $row) {
+            array_push($html, '<li><a href="/category/'.$row["cat_name"].'">'.$row["cat_title"].'</a></li>');
+        }
+
+        file_put_contents($_SERVER["DOCUMENT_ROOT"].DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."categories-menu.html", implode('', $html));
+    }
 
 
 

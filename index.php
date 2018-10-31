@@ -16,20 +16,7 @@ use \Blog\helper\Check;
 $app = new \Slim\Slim();
 $app->get('/', function(){
     
-    function Words(string $texto, int $limite, $ponteiro = null) {
-        $Data = strip_tags($texto);
-        $Format = (int) $limite;
-
-        $arrWords = explode(" ", $Data);
-        $numWords = count($arrWords);
-        $newWord = implode(" ", array_slice($arrWords, 0, $Format));
-
-        if (!empty($ponteiro)) {
-            $newWord .= $ponteiro;
-        }
-
-        return $newWord;
-    }
+    require_once("./vendor/blog/functions.php");
 
     $posts = Post::getPosts(4);
     $page = new Page();
@@ -38,6 +25,12 @@ $app->get('/', function(){
     ));
 
 });
+$app->get('/noticias/:noticia', function($noticia){
+    $posts = Post::getPosts(4);
+    $page = new Page();
+    $page->setTpl("page");
+});
+
 $app->get('/admin', function(){
     User::verifyLogin();
     $page = new PageAdmin();
@@ -92,14 +85,16 @@ $app->post('/admin/users/create', function(){
     $data = array_map("strip_tags", $data);
     $data = array_map("trim", $data);
     $data["email"] = strtolower($data["email"]);
-    $data["password"] = password_hash($data["password"],PASSWORD_DEFAULT,["code"=>12]);
     $data["level"] = (isset($data["level"])) ? 1 : 0;
     if(!Check::email($data["email"])){
         throw new \Exception("formato do e-mail é inválido!");
     }
+    
     $user = new User();
-    $data = User::save($data);
-        
+    $user->setData($data);
+    var_dump($user);
+    exit();
+    $data = User::save();  
     header("location: /admin/users");
     exit();
 });
