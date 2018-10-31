@@ -97,10 +97,10 @@ class Category extends Model {
      * 
      * @param int $id = id_cat da categoria que será excluida. 
      */
-    public static function deleteCatById($id){
+    public function deleteCatById($id){
 
         $sql = new \Blog\DB\Sql();
-        $resultado = $sql->query("DELETE FROM tb_categories WHERE cat_id = :valor",array(
+        $resultado = $sql->select("DELETE FROM tb_categories WHERE id_cat = :valor",array(
             ":valor"=>$id
         ));
         Category::updateFile();

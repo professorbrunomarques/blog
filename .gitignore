@@ -1,5 +1,4 @@
 /views-cache/
 /uploads/
-/vendor/blog/classes/DB/
+/vendor/blog/classes/DB/Sql.php
 /vendor/gabrielgil/timthumb/cache/
-vendor/rain/raintpl/cache/
