@@ -84,15 +84,14 @@ $app->post('/admin/users/create', function(){
     $data = array_map("trim", $data);
     $data["email"] = strtolower($data["email"]);
     $data["level"] = (isset($data["level"])) ? 1 : 0;
+    
     if(!Check::email($data["email"])){
         throw new \Exception("formato do e-mail é inválido!");
     }
     
     $user = new User();
     $user->setData($data);
-    var_dump($user);
-    exit();
-    $data = User::save();  
+    $user->save();  
     header("location: /admin/users");
     exit();
 });
@@ -268,6 +267,69 @@ $app->post('/admin/categories/:cat_id', function($cat_id){
     $cat->update($cat_id);
     header("Location: /admin/categories");
     exit();
+});
+// FORGOT
+$app->get('/admin/forgot', function(){
+
+    $page = new PageAdmin([
+        "header"=>false,
+        "footer"=>false
+    ]);
+
+    $page->setTpl("forgot");
+});
+$app->post('/admin/forgot', function(){
+
+    $user = User::getForgot($_POST["email"]);
+
+    header("Location: /admin/forgot/sent");
+    exit;
+
+});
+
+$app->get('/admin/forgot/sent', function(){
+
+    $page = new PageAdmin([
+        "header"=>false,
+        "footer"=>false
+    ]);
+
+    $page->setTpl("forgot-sent");
+
+});
+$app->get('/admin/forgot/reset', function(){
+    
+    $user = User::validForgotDecrypt($_GET["code"]);
+
+    $page = new PageAdmin([
+        "header"=>false,
+        "footer"=>false
+    ]);
+
+    $page->setTpl("forgot-reset", array(
+        "name"=>$user["name"],
+        "code"=>$_GET["code"]
+    ));
+});
+$app->post('/admin/forgot/reset', function(){
+    $forgot = User::validForgotDecrypt($_POST["code"]);
+
+    User::setForgotUsed($forgot["idrecovery"]);
+
+    $user = new User();
+    $user->get((int)$forgot["id_user"]);
+    $user->setNewPassword($_POST["password"]);
+
+    $page = new PageAdmin([
+        "header"=>false,
+        "footer"=>false
+    ]);
+
+    $page->setTpl("forgot-reset-success");
+});
+$app->get("/posts/:post_name", function($post_name){
+   $page = new Page();
+   $page->setTpl("posts");
 });
 
 $app->run();

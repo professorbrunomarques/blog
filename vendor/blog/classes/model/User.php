@@ -5,11 +5,13 @@ namespace Blog\Model;
 use \Blog\Model;
 use \Blog\helper\Check;
 use \Blog\DB\Sql;
+use \Blog\Mailer;
 
 class User extends Model {
 
 	const SESSION = "User";
-
+	const SECRET = "123qwe"; 
+    const CIPHER = "AES-256-CBC";
 	
 	public static function login($login, $password):User
 	{
@@ -78,14 +80,10 @@ class User extends Model {
 
 	public function save()
 	{	
-		//Cria os metodos sets automaticamente
-		//$user = new User();
-		//$user->setData($data);
-
 		$sql = new Sql;
-		return $sql->query("INSERT INTO tb_users (id_user, login, password, name, level, email) VALUES (NULL, :login, :password, :name, :level, :email)", array(
+		return $sql->query("INSERT INTO tb_users (login, password, name, level, email) VALUES (:login, :password, :name, :level, :email)", array(
 			":login"=>$this->getlogin(),
-			":password"=>$this->getpassword(),
+			":password"=>password_hash($this->getpassword(), PASSWORD_DEFAULT, ["coast"=>12]),
 			":name"=>$this->getname(),
 			":level"=>$this->getlevel(),
 			":email"=>$this->getemail()
@@ -120,6 +118,96 @@ class User extends Model {
 		));
 	}
 
-}
+	public function get($id_user){
+		
+		$sql = new Sql();
+		$res = $sql->select("SELECT * FROM tb_users WHERE id_user = :id_user", array(
+			":id_user"=>$id_user
+		));
+		$this->setData($res[0]);
+	}
+	public static function getForgot(string $email){
 
- ?>
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM tb_users WHERE email = :email", array(
+			":email"=>$email 
+		));
+		if(count($result) === 0){
+			throw new \Exception("Não foi possível recuperar sua senha");			
+		}else{
+			$data = $result[0];
+			
+			$results2 = $sql->select("CALL sp_userspasswordsrecoveries_create(:iduser, :user_ip);", array(
+				":iduser"=>$data["id_user"],
+				":user_ip"=>$_SERVER["REMOTE_ADDR"]
+			));
+
+			if(count($results2) === 0){
+				throw new \Exception("Não foi possível recuperar sua senha");
+			}else{
+
+				$dataRecovery = $results2[0];
+
+				$IV = random_bytes(openssl_cipher_iv_length(User::CIPHER)); 
+				//Codigo encriptografado
+				$code = openssl_encrypt($dataRecovery["idrecovery"], User::CIPHER, USER::SECRET, 0, $IV);
+
+				$result = base64_encode($IV.$code);
+				
+				$link = "http://www.blog.com.br/admin/forgot/reset?code=$result";
+
+				$mailer = new Mailer($data["email"], $data["name"], "Redefinir Senha do Blog", "forgot", array(
+					"name"=> $data["name"],
+					"link"=> $link
+				));
+
+				$mailer->send();
+
+				return $data;
+			}
+		}
+	}
+
+	public static function validForgotDecrypt($result)
+	{
+		$result = base64_decode($result);
+		$code = mb_substr($result, openssl_cipher_iv_length('aes-256-cbc'), null, '8bit');
+		$iv = mb_substr($result, 0, openssl_cipher_iv_length('aes-256-cbc'), '8bit');
+		$idrecovery = openssl_decrypt($code, 'aes-256-cbc', User::SECRET, 0, $iv);
+		
+		$sql = new Sql();
+		$results = $sql->select("
+		SELECT *
+		FROM tb_userspasswordsrecoveries a
+		INNER JOIN tb_users b USING(id_user) 
+		WHERE a.idrecovery = :idrecovery 
+		AND a.dtrecovery IS NULL AND DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
+		", array(
+			":idrecovery"=>$idrecovery
+		));
+		
+		if(count($results) === 0){
+			throw new \Exception("Não foi possível recuperar a senha.");
+		}else{
+			return $results[0];
+		}
+
+	}
+	public static function setForgotUsed($idrecovery)
+	{
+		$sql = new Sql();
+		$sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE idrecovery = :idrecovery",array(
+			":idrecovery"=>$idrecovery
+		));
+	}
+
+	public function setNewPassword($password)
+	{
+
+		$sql = new Sql();
+		$sql->query("UPDATE tb_users SET password = :password WHERE id_user = :id_user", array(
+			":password"=>password_hash($password, PASSWORD_DEFAULT, ["coast"=>12]),
+			":id_user"=>$this->getid_user()
+		));
+	}
+}
