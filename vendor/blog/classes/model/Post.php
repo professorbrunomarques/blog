@@ -17,6 +17,32 @@ class Post extends Model {
         return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC");
     }
 
+    public static function getPosts(int $itensPerPage)
+    {
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT :itens;", array(
+            ":itens"=>$itensPerPage
+        ));
+        return $results;
+    }
+    public function getPostsPage ($page = 1, $itensPerPage = 4)
+    {
+
+        $start = ($page -1)* $itensPerPage;
+        $sql =  new Sql();
+        $results = $sql->select("SELECT SQL_CALC_FOUND_ROWS * FROM tb_posts WHERE post_status = 1 LIMIT :page, :itens;",array(
+            ":page"=>$page,
+            ":itens"=>$itensPerPage
+        ));
+        $resultTotal = $sql->select("SELECT FOUND_ROWS() as nrtotal;");
+
+        return array(
+            "data"=>$results,
+            "total"=>(int)$resultTotal[0]["nrtotal"],
+            "pages"=>ceil($resultTotal[0]["nrtotal"] / $itensPerPage)
+        );
+    }
+
     public static function getPostById(int $post_id)
     {
         $sql = new Sql;

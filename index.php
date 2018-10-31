@@ -14,8 +14,13 @@ use \Blog\helper\Check;
 $app = new \Slim\Slim();
 $app->get('/', function(){
     
+    require_once("./vendor/blog/functions.php");
+
+    $posts = Post::getPosts(4);
     $page = new Page();
-    $page->setTpl("index");
+    $page->setTpl("index", array(
+        "posts"=>$posts
+    ));
 
 });
 $app->get('/admin', function(){
