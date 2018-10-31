@@ -3,6 +3,8 @@ session_start();
 
 require_once './vendor/autoload.php';
 
+
+
 use \Slim\Slim;
 use \Blog\Page;
 use \Blog\PageAdmin;
@@ -14,8 +16,26 @@ use \Blog\helper\Check;
 $app = new \Slim\Slim();
 $app->get('/', function(){
     
+    function Words(string $texto, int $limite, $ponteiro = null) {
+        $Data = strip_tags($texto);
+        $Format = (int) $limite;
+
+        $arrWords = explode(" ", $Data);
+        $numWords = count($arrWords);
+        $newWord = implode(" ", array_slice($arrWords, 0, $Format));
+
+        if (!empty($ponteiro)) {
+            $newWord .= $ponteiro;
+        }
+
+        return $newWord;
+    }
+
+    $posts = Post::getPosts();
     $page = new Page();
-    $page->setTpl("index");
+    $page->setTpl("index", array(
+        "posts"=>$posts
+    ));
 
 });
 $app->get('/admin', function(){

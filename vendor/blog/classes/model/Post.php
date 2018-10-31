@@ -17,7 +17,13 @@ class Post extends Model {
         return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC");
     }
 
-    public function getPostsPage ($page = 1, $itensPerPage = 3)
+    public static function getPosts()
+    {
+        $sql = new Sql();
+        $results = $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT 4");
+        return $results;
+    }
+    public function getPostsPage ($page = 1, $itensPerPage = 4)
     {
 
         $start = ($page -1)* $itensPerPage;
