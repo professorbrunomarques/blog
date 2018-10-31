@@ -17,10 +17,12 @@ class Post extends Model {
         return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC");
     }
 
-    public static function getPosts()
+    public static function getPosts(int $itensPerPage)
     {
         $sql = new Sql();
-        $results = $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT 4");
+        $results = $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT :itens;", array(
+            ":itens"=>$itensPerPage
+        ));
         return $results;
     }
     public function getPostsPage ($page = 1, $itensPerPage = 4)

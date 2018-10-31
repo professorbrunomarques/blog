@@ -31,7 +31,7 @@ $app->get('/', function(){
         return $newWord;
     }
 
-    $posts = Post::getPosts();
+    $posts = Post::getPosts(4);
     $page = new Page();
     $page->setTpl("index", array(
         "posts"=>$posts
