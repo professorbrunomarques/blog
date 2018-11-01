@@ -56,35 +56,28 @@ article.artigo {width: 80%; margin: 0 auto;}
 article.artigo p {font-size: 1.2em; line-height: 1.5em; margin-bottom: 25px;}
 article.artigo img {display: block; margin: 0 auto 25px auto;}
 
+.card {width: 25%; float: left; padding: 10px;}
+.card-body {margin-top: -5px; border: 1px solid #e3e3e3; padding: 10px; text-align: center;}
+.card-body p {font-size: 1.2em; line-height: 1.5em; margin-bottom: 25px; min-height: 115px; text-align: left;}
+.card-imgage img {display: block; margin-bottom:10px;}
+.card-body a.btn {background: #431F1F; color: #FFF; text-decoration:none;  padding: 8px 12px; display: inline-block;}
+
+.pagination{list-style: none; text-align: center;}
+.pagination li {display: inline-block;}
+.pagination li a {text-decoration: none; display: block; font-size: 1.25em; width: 30px; height: 30px; border: 1px solid #431F1F; color: #431F1F}
+.pagination li a:hover{background: #431F1F; color: #FFF;}
+
 /* Small devices (landscape phones, 576px and up)*/
-@media (max-width: 576px) {  }
+@media (max-width: 576px) {  
+    
+}
 
 /* Medium devices (tablets, 768px and up)*/
-@media (max-width: 768px) { 
-    .main-content {
-        width: 100%;
-        margin-right: 0%;
-        float: none;
-    }
-    .barra-lateral {width: 100%; float: none;}
-    
- }
+@media (min-width: 768px) { 
+
+}
 
 /* Large devices (desktops, 992px and up)*/
-@media (max-width: 992px) {
-    h1 {font-size: 2em;}
-    .content{width: 95%;} 
-    .header-logo{width: 100%; float: none;}
-    .header-banner{width: 100%; float: none;}
-
-    .last-news article {width: 49%; margin-bottom: 15px;}
-    .last-news article:nth-of-type(2n+0){margin-right: 0;}
-
-    .title-section {font-size: 1.65em !important;}
-
-    .mais-lidas img{width: 100%; display: block; float: none;}
+@media (min-width: 992px) {
     
  }
-
-/* Extra large devices (large desktops, 1200px and up)*/
-@media (max-width: 1200px) {  }

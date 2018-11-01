@@ -1,0 +1,30 @@
+<main class="content clearfix">
+    <section class="category">
+        <header>
+            <h1>{$category}</h1>
+            <hr>
+        </header>
+        <main class="cards clearfix">
+            {loop="$posts"}
+            <div class="card">
+                <div class="card-image">
+                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$value.post_image}&w=320&h=180" alt="">
+                </div>
+                <div class="card-body">
+                    <p>{$value.post_title}</p>
+                    <a class="btn" href="/post/{$value.post_name}">Leia mais</a>
+                </div>    
+            </div>
+            {/loop}
+        </main>
+        <footer>
+            <nav>
+                <ul class="pagination">
+                    {loop="$pages"}
+                    <li><a href="{$value.link}">{$value.page}</a></li>
+                    {/loop}
+                </ul>
+            </nav>
+        </footer>
+    </section>
+</main>

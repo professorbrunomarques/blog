@@ -6,7 +6,7 @@
             <p><b>Publicado por:</b> {$post_author} em {function="date('d/m/Y H:i:s',strtotime($post_date))"}</p>
         </header>
         <main>
-            <a href="/">Home</a> | <a href="/{$cat_name}">{$cat_title}</a>
+            <a href="/">Home</a> | <a href="/category/{$cat_name}">{$cat_title}</a>
             {$post_text}
         </main>
         <footer>
