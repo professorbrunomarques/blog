@@ -1,23 +1,23 @@
     <main class="content clearfix">
         <div class="main-content">
             <article class="destaque">
-                <h1><a href="#">{$posts[0]["post_title"]}</a></h1>
-                <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[0]['post_image']}&h=300" alt="{$posts[0]["post_title"]}" title="{$posts[0]["post_title"]}"/>
+                <h1><a href="/post/{$posts[0]['post_name']}">{$posts[0]["post_title"]}</a></h1>
+                <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[0]['post_image']}&w=700&h=400&a=t" alt="{$posts[0]["post_title"]}" title="{$posts[0]["post_title"]}"/>
                 <p class="tagline">{function="Words($posts[0]["post_text"], 20)"}</p>
             </article>
             <section class="last-news clearfix">
                 <h1>Últimas Notícias</h1>
                 <article>
-                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[1]['post_image']}&w=170&h=100" alt="{$posts[1]["post_title"]}" title="{$posts[1]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[1]["post_text"], 20)"}</a></h1>
+                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[1]['post_image']}&w=250&h=150&a=t" alt="{$posts[1]["post_title"]}" title="{$posts[1]["post_title"]}"/>
+                    <h1><a href="/post/{$posts[1]['post_name']}">{function="Words($posts[1]["post_text"], 20)"}</a></h1>
                 </article>
                 <article>
-                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[2]['post_image']}&w=170&h=100" alt="{$posts[2]["post_title"]}" title="{$posts[2]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[2]["post_text"], 20)"}</a></h1>
+                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[2]['post_image']}&w=250&h=150&a=t" alt="{$posts[2]["post_title"]}" title="{$posts[2]["post_title"]}"/>
+                    <h1><a href="/post/{$posts[2]['post_name']}">{function="Words($posts[2]["post_text"], 20)"}</a></h1>
                 </article>
                 <article>
-                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[3]['post_image']}&w=170&h=100" alt="{$posts[3]["post_title"]}" title="{$posts[3]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[3]["post_text"], 20)"}</a></h1>
+                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[3]['post_image']}&w=250&h=150&a=t" alt="{$posts[3]["post_title"]}" title="{$posts[3]["post_title"]}"/>
+                    <h1><a href="/post/{$posts[3]['post_name']}">{function="Words($posts[3]["post_text"], 20)"}</a></h1>
                 </article>
             </section>
         </div>
@@ -26,15 +26,15 @@
                 <h1 class="title-section">Notícias mais lidas</h1>
                 <article class="clearfix">
                     <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[1]['post_image']}&w=170&h=100" alt="{$posts[1]["post_title"]}" title="{$posts[1]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[1]["post_text"], 15)"}</a></h1>
+                    <h1><a href="/post/{$posts[1]['post_name']}">{function="Words($posts[1]["post_text"], 15)"}</a></h1>
                 </article>
                 <article class="clearfix">
                     <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[2]['post_image']}&w=170&h=100" alt="{$posts[2]["post_title"]}" title="{$posts[2]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[2]["post_text"], 15)"}</a></h1>
+                    <h1><a href="/post/{$posts[2]['post_name']}">{function="Words($posts[2]["post_text"], 15)"}</a></h1>
                 </article>
                 <article class="clearfix">
                     <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$posts[3]['post_image']}&w=170&h=100" alt="{$posts[3]["post_title"]}" title="{$posts[3]["post_title"]}"/>
-                    <h1><a href="#">{function="Words($posts[3]["post_text"], 15)"}</a></h1>
+                    <h1><a href="/post/{$posts[3]['post_name']}">{function="Words($posts[3]["post_text"], 15)"}</a></h1>
                 </article>
             </section>
             <div class="linha">

@@ -20,7 +20,11 @@ class Post extends Model {
     public static function getPosts(int $itensPerPage)
     {
         $sql = new Sql();
-        $results = $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT :itens;", array(
+        $results = $sql->select("
+        SELECT *
+            FROM tb_posts AS P 
+            INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
+            WHERE P.post_status = 1 ORDER BY P.post_id DESC LIMIT :itens;", array(
             ":itens"=>$itensPerPage
         ));
         return $results;
@@ -49,6 +53,19 @@ class Post extends Model {
         return $sql->select("SELECT * FROM tb_posts WHERE post_id = :post_id", array(
             ":post_id"=>$post_id
         ));
+    }
+    public static function getPostByName(string $post_name)
+    {
+        $sql = new Sql;
+        $result =  $sql->select("
+            SELECT P.post_title, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
+            FROM tb_posts AS P 
+            INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
+            WHERE P.post_name = :post_name", 
+        array(
+            ":post_name"=>$post_name
+        ));
+        return $result[0];
     }
 
     public function save()

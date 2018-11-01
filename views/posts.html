@@ -1,7 +1,16 @@
 <main class="content clearfix">
     <article class="artigo">
         <header>
-            <h1>TITULO</h1>
+            <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post_image}&w=1000&h=300&a=t"/>
+            <h1>{$post_title}</h1>
+            <p><b>Publicado por:</b> {$post_author} em {function="date('d/m/Y H:i:s',strtotime($post_date))"}</p>
         </header>
+        <main>
+            <a href="/">Home</a> | <a href="/{$cat_name}">{$cat_title}</a>
+            {$post_text}
+        </main>
+        <footer>
+
+        </footer>
     </article>
 </main>

@@ -13,13 +13,13 @@
 /*O BANNER ESTÁ OCULTO, PARA EXIBIR COMENTE A LINHA ABAIXO*/
 #banner{display: none !important;}
 
-img {max-width: 100%; width: 100%;}
+img {max-width: 100%;}
 h1 {font-size: 2.5em; font-weight: 300;}
 h1 a {color: #F60; text-decoration: none;}
 h1 a:hover {text-decoration: underline;}
 
-header {background: #431F1F;}
-header .content{padding: 20px 0;}
+body > header {background: #431F1F;}
+body > header .content{padding: 20px 0;}
 .header-logo{max-width: 140px; width: 30%; float: left;}
 .header-banner{max-width: 850px; width: 70%; float: right;}
 
@@ -50,7 +50,11 @@ main {padding: 20px 0;}
 
 .barra-lateral .linha {margin-bottom: 20px;}
 
-footer {background: #431F1F; padding: 20px; text-align: center; color: #FFF;}
+body > footer {background: #431F1F; padding: 20px; text-align: center; color: #FFF;}
+
+article.artigo {width: 80%; margin: 0 auto;}
+article.artigo p {font-size: 1.2em; line-height: 1.5em; margin-bottom: 25px;}
+article.artigo img {display: block; margin: 0 auto 25px auto;}
 
 /* Small devices (landscape phones, 576px and up)*/
 @media (max-width: 576px) {  }

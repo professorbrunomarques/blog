@@ -28,6 +28,7 @@ class Page
         $config = array(
             "tpl_dir" => $tpl_dir,
             "cache_dir" => "./views-cache/",
+            "auto_escape" => false,
             "debug" => false, // set to false to improve the speed
         );
 

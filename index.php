@@ -327,9 +327,10 @@ $app->post('/admin/forgot/reset', function(){
 
     $page->setTpl("forgot-reset-success");
 });
-$app->get("/posts/:post_name", function($post_name){
+$app->get("/post/:post_name", function($post_name){
+   $post = Post::getPostByName($post_name);
    $page = new Page();
-   $page->setTpl("posts");
+   $page->setTpl("posts", $post);
 });
 
 $app->run();
