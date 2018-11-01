@@ -3,6 +3,7 @@ use \Blog\Page;
 use \Blog\PageAdmin;
 use \Blog\model\Post;
 use \Blog\model\User;
+use \Blog\model\Category;
 use \Blog\helper\Check;
 
 $app->get('/', function(){
@@ -108,7 +109,31 @@ $app->post('/admin/forgot/reset', function(){
 
     $page->setTpl("forgot-reset-success");
 });
+//EXIBIR POSTS POR CATEGORIA
+$app->get("/category/:cat_name", function(string $cat_name){
+    $page = (isset($_GET["page"]))? (int)$_GET["page"]: 1;
+    $categoria = new Category();
+    $data = $categoria->getCatByName($cat_name);
+    $categoria->setData($data[0]);
+    $pagination = $categoria->getPostsPage($page, 2);
 
+    $pages = [];
+    if($pagination['pages'] > 1){
+        for ($i=1; $i <= $pagination['pages']; $i++) { 
+            array_push($pages,[
+                'link'=>'/category/'.$categoria->getcat_name().'?page='.$i,
+                'page'=>$i
+            ]);
+        }
+    }
+    $page = new Page();
+    $page->setTpl("categories", [
+        "posts"=>$pagination["data"], 
+        "category"=>$data[0]["cat_title"],
+        "pages"=>$pages
+        ]);
+});
+// EXIBIR POST NO SITE
 $app->get("/post/:post_name", function($post_name){
     $post = Post::getPostByName($post_name);
     $page = new Page();

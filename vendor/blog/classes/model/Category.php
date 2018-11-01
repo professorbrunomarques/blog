@@ -48,8 +48,8 @@ class Category extends Model {
      * @param int $valor Informe o cat_name da categoria a ser consultada
      * @return array com o resultado da consulta.
      */
-    public static function getCatByName(string $valor){
-        $sql = new \Blog\DB\Sql();
+    public function getCatByName(string $valor){
+        $sql = new Sql();
         $resultado = $sql->select("SELECT * FROM tb_categories WHERE cat_name = :valor",array(
             ":valor"=>$valor
         ));
@@ -119,6 +119,25 @@ class Category extends Model {
         file_put_contents($_SERVER["DOCUMENT_ROOT"].DIRECTORY_SEPARATOR."views".DIRECTORY_SEPARATOR."categories-menu.html", implode('', $html));
     }
 
+    public function getPostsPage ($page = 1, $itensPerPage = 4)
+    {
 
+        $start = ($page -1)* $itensPerPage;
+        $sql =  new Sql();
+        $results = $sql->select("SELECT sql_calc_found_rows P.post_title, P.post_name, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
+            FROM tb_posts AS P 
+            INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
+            WHERE C.cat_name = :cat_name
+            LIMIT $start, $itensPerPage;",array(
+            ":cat_name"=>$this->getcat_name()    
+        ));
+        $resultTotal = $sql->select("SELECT FOUND_ROWS() as nrtotal;");
+
+        return array(
+            "data"=>$results,
+            "total"=>(int)$resultTotal[0]["nrtotal"],
+            "pages"=>ceil($resultTotal[0]["nrtotal"] / $itensPerPage)
+        );
+    }
 
 }

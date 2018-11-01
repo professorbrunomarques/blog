@@ -29,24 +29,7 @@ class Post extends Model {
         ));
         return $results;
     }
-    public function getPostsPage ($page = 1, $itensPerPage = 4)
-    {
-
-        $start = ($page -1)* $itensPerPage;
-        $sql =  new Sql();
-        $results = $sql->select("SELECT SQL_CALC_FOUND_ROWS * FROM tb_posts WHERE post_status = 1 LIMIT :page, :itens;",array(
-            ":page"=>$page,
-            ":itens"=>$itensPerPage
-        ));
-        $resultTotal = $sql->select("SELECT FOUND_ROWS() as nrtotal;");
-
-        return array(
-            "data"=>$results,
-            "total"=>(int)$resultTotal[0]["nrtotal"],
-            "pages"=>ceil($resultTotal[0]["nrtotal"] / $itensPerPage)
-        );
-    }
-
+    
     public static function getPostById(int $post_id)
     {
         $sql = new Sql;
@@ -66,6 +49,19 @@ class Post extends Model {
             ":post_name"=>$post_name
         ));
         return $result[0];
+    }
+    public static function getPostByCatName(string $cat_name)
+    {
+        $sql = new Sql;
+        $results =  $sql->select("
+            SELECT P.post_title, P.post_name, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
+            FROM tb_posts AS P 
+            INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
+            WHERE C.cat_name = :cat_name", 
+        array(
+            ":cat_name"=>$cat_name
+        ));
+        return $results;
     }
 
     public function save()
