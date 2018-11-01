@@ -80,9 +80,9 @@ class Category extends Model {
      * 
      */
     public function update(int $cat_id) {
-                
+        echo ($this->getcat_parent());        
         $sql = new Sql();
-        $sql->query("UPDATE tb_categories set cat_id = :cat_id, cat_title = :cat_title, cat_name = :cat_name, cat_desc = :cat_desc, cat_parent = :cat_parent WHERE cat_id = :cat_id;",array(
+        $sql->query("UPDATE tb_categories set cat_title = :cat_title, cat_name = :cat_name, cat_desc = :cat_desc, cat_parent = :cat_parent WHERE cat_id = :cat_id;",array(
             ":cat_id"=>$cat_id,
             ":cat_title"=>$this->getcat_title(),
             ":cat_name"=>$this->getcat_name(),
