@@ -4,6 +4,7 @@ use \Blog\PageAdmin;
 use \Blog\model\Post;
 use \Blog\model\User;
 use \Blog\model\Category;
+use \Blog\model\Comment;
 use \Blog\helper\Check;
 
 $app->get('/', function(){
@@ -111,11 +112,16 @@ $app->post('/admin/forgot/reset', function(){
 });
 //EXIBIR POSTS POR CATEGORIA
 $app->get("/category/:cat_name", function(string $cat_name){
+    //Pega a página atual
     $page = (isset($_GET["page"]))? (int)$_GET["page"]: 1;
+
+    //Gera um objeto e cria os metodos gets de acordo com o cat_name
     $categoria = new Category();
     $data = $categoria->getCatByName($cat_name);
     $categoria->setData($data[0]);
-    $pagination = $categoria->getPostsPage($page, 2);
+    
+    //Faz a paginação dos dados
+    $pagination = $categoria->getPostsPage($page, 8);
 
     $pages = [];
     if($pagination['pages'] > 1){
@@ -136,6 +142,28 @@ $app->get("/category/:cat_name", function(string $cat_name){
 // EXIBIR POST NO SITE
 $app->get("/post/:post_name", function($post_name){
     $post = Post::getPostByName($post_name);
-    $page = new Page();
+    $page = new Page($post);
     $page->setTpl("posts", $post);
+ });
+
+ //ROTAS PARA TESTES
+ $app->get("/teste", function(){
+     //var_dump(Comment::listAll(3));
+     
+     
+     
+     $dados = [
+        "comment_text"=>"Batata de Marechal",
+        "comment_id"=>3 
+     ];
+     
+     $comment = new Comment();
+     $comment->setData($dados);
+     $comment->update();
+     
+     // TESTE DO SAVE
+     /* $res = $comment->save();
+     echo "SALVO COM SUCESSO!<br>";
+     var_dump($res); */
+
  });

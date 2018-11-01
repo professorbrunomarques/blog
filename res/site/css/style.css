@@ -59,7 +59,9 @@ article.artigo img {display: block; margin: 0 auto 25px auto;}
 .card {width: 25%; float: left; padding: 10px;}
 .card-body {margin-top: -5px; border: 1px solid #e3e3e3; padding: 10px; text-align: center;}
 .card-body p {font-size: 1.2em; line-height: 1.5em; margin-bottom: 25px; min-height: 115px; text-align: left;}
+.card-imgage{position: relative;}
 .card-imgage img {display: block; margin-bottom:10px;}
+.card-date{background: rgba(67, 31, 31, 0.698); color: #FFF; position: absolute; padding: 10px;}
 .card-body a.btn {background: #431F1F; color: #FFF; text-decoration:none;  padding: 8px 12px; display: inline-block;}
 
 .pagination{list-style: none; text-align: center;}

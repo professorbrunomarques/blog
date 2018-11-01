@@ -8,6 +8,7 @@
             {loop="$posts"}
             <div class="card">
                 <div class="card-image">
+                    <div class="card-date">{function="date('d/m/Y',strtotime($value.post_date))"}</div>
                     <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$value.post_image}&w=320&h=180" alt="">
                 </div>
                 <div class="card-body">

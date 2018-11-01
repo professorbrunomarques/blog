@@ -34,7 +34,7 @@
               <label for="cat_id">Categoria</label>
               <select name="cat_id" class="form-control" required>
                 {loop="$categorys"}
-                <option value="{$value.cat_id}" {if="$value.cat_id = $post.cat_id"}selected{/if}>{$value.cat_title}</option>
+                <option value="{$value.cat_id}" {if="$value.cat_id === $post.cat_id"}selected{/if}>{$value.cat_title}</option>
                 {/loop}
               </select>
             </div>
