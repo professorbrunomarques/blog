@@ -5,6 +5,7 @@
             <hr>
         </header>
         <main class="cards clearfix">
+            {if="$posts != NULL"}
             {loop="$posts"}
             <a href="/post/{$value.post_name}">
             <div class="card zoom">
@@ -19,6 +20,9 @@
             </div>
             </a>
             {/loop}
+            {else}
+                {include="sorry"}
+            {/if}
         </main>
         <footer>
             <nav>
