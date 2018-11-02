@@ -6,16 +6,18 @@
         </header>
         <main class="cards clearfix">
             {loop="$posts"}
-            <div class="card">
+            <a href="/post/{$value.post_name}">
+            <div class="card zoom">
                 <div class="card-image">
                     <div class="card-date">{function="date('d/m/Y',strtotime($value.post_date))"}</div>
                     <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$value.post_image}&w=320&h=180" alt="">
                 </div>
                 <div class="card-body">
                     <p>{$value.post_title}</p>
-                    <a class="btn" href="/post/{$value.post_name}">Leia mais</a>
+                    <!-- <a class="btn" href="/post/{$value.post_name}">Leia mais</a> -->
                 </div>    
             </div>
+            </a>
             {/loop}
         </main>
         <footer>
