@@ -19,7 +19,7 @@
                             <div class="comment_text float-right">
                                 <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
-                                <a href="" class="replyto" onclick="document.getElementById('replyto').value=1; document.getElementById('comment_user').focus(); return false">Responder</a>
+                                <a href="" class="replyto" onclick="responder('Bruno',1); return false;">Responder</a>
                             </div>
                         </li>
                         <li class="clearfix">
@@ -27,13 +27,14 @@
                             <div class="comment_text float-right">
                                 <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
-                                <a href="" class="replyto" onclick="document.getElementById('replyto').value=2; document.getElementById('comment_user').focus(); return false">Responder</a>
+                                <a href="" class="replyto" onclick="responder('MARIA',2); return false;">Responder</a>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <form action="/post/{$post_name}/add-comment" id="form" method="POST">
                     <div class="clearfix">
+                        <p id="replyto_text" style="display:none;"></p>
                         <input type="hidden" name="replyto" id="replyto" readonly>
                         <div class="w-50 float-left">
                             <label>
@@ -53,7 +54,7 @@
                             <span>Seu comentário</span>
                             <textarea name="comment_text" rows="5" required></textarea>
                         </label>
-                        <input type="submit" value="Enviar">
+                        <input type="submit" class="btn" id="btn_submit" value="Enviar Commentário"> <input type="reset" class="btn" id="btn_reset" style="display:none;" value="Cancelar Resposta" onclick="cancelReply()">
                     </div>
                 </form>
             </div>
