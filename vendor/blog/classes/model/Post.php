@@ -41,7 +41,7 @@ class Post extends Model {
     {
         $sql = new Sql;
         $result =  $sql->select("
-            SELECT P.post_title, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
+            SELECT P.post_title, P.post_name, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
             FROM tb_posts AS P 
             INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
             WHERE P.post_name = :post_name", 

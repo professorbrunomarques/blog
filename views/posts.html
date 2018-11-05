@@ -1,7 +1,7 @@
 <main class="content clearfix">
     <article class="artigo">
         <header>
-            <img class="post_image" src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post_image}&w=1000&h=400&a=t"/>
+            <img class="post_image" src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post_image}&w=1000&h=400&a=t" />
             <h1 class="animated fadeIn delay-2s">{$post_title}</h1>
         </header>
         <main>
@@ -10,7 +10,53 @@
             {$post_text}
         </main>
         <footer>
-
+            <div class="comments">
+                <h2>Comentários</h2>
+                <div class="content-comments">
+                    <ul>
+                        <li class="clearfix">
+                            <div class="comment_user_photo float-left"><img src="/res/admin/dist/img/avatar.png"></div>
+                            <div class="comment_text float-right">
+                                <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
+                                <a href="" class="replyto" onclick="document.getElementById('replyto').value=1; document.getElementById('comment_user').focus(); return false">Responder</a>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="comment_user_photo float-left"><img src="/res/admin/dist/img/avatar.png"></div>
+                            <div class="comment_text float-right">
+                                <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
+                                <a href="" class="replyto" onclick="document.getElementById('replyto').value=2; document.getElementById('comment_user').focus(); return false">Responder</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <form action="/post/{$post_name}/add-comment" id="form" method="POST">
+                    <div class="clearfix">
+                        <input type="hidden" name="replyto" id="replyto" readonly>
+                        <div class="w-50 float-left">
+                            <label>
+                                <span>Nome</span>
+                                <input type="text" name="comment_user" id="comment_user" placeholder="Digite seu nome..." required />
+                            </label>
+                        </div>
+                        <div class="w-50 float-left">
+                            <label>
+                                <span>E-mail</span>
+                                <input type="email" name="comment_email" placeholder="Digite seu nome..." required />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <label>
+                            <span>Seu comentário</span>
+                            <textarea name="comment_text" rows="5" required></textarea>
+                        </label>
+                        <input type="submit" value="Enviar">
+                    </div>
+                </form>
+            </div>
         </footer>
     </article>
 </main>
