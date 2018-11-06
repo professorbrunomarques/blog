@@ -127,7 +127,7 @@ class Category extends Model {
         $results = $sql->select("SELECT sql_calc_found_rows P.post_title, P.post_name, P.post_image, P.post_author, P.post_text, P.post_date, P.cat_id, C.cat_name, C.cat_title
             FROM tb_posts AS P 
             INNER JOIN tb_categories AS C ON P.cat_id = C.cat_id
-            WHERE C.cat_name = :cat_name
+            WHERE C.cat_name = :cat_name ORDER BY P.post_date DESC
             LIMIT $start, $itensPerPage;",array(
             ":cat_name"=>$this->getcat_name()    
         ));
