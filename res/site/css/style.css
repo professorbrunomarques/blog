@@ -69,10 +69,10 @@ main {padding: 20px 0;}
 body > footer {background: #431F1F; padding: 20px; text-align: center; color: #FFF;}
 
 article.artigo {width: 80%; margin: 0 auto;}
-article.artigo header{position: relative; height: 400px;}
+article.artigo header{position: relative;}
 article.artigo header h1 {width:100%; color: #fff; padding: 20px; text-shadow: 2px 2px 5px rgba(0,0,0, 0.8); position: absolute; bottom: 0; background: rgba(0,0,0, 0.5); margin: 0;}
 article.artigo main {padding: 20px;}
-article.artigo .post_image {width: 100%; max-height: 400px; position: absolute; z-index: -1;}
+article.artigo .post_image {width: 100%;}
 article.artigo p {font-size: 1.2em; line-height: 1.5em; margin-bottom: 25px;}
 article.artigo main img {display: block; margin: 0 auto 25px auto;}
 /* COMENTÁRIOS */
@@ -116,6 +116,12 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
 
     .barra-lateral .title-section {font-size: 1.5em;}
     .mais-lidas article h1 {font-size: 1em;}
+
+    article.artigo {width: 90%; margin: 0 auto;}
+    article.artigo header h1 {padding: 20px; text-shadow: 2px 2px 5px rgba(0,0,0, 0.8); position: absolute; bottom: 0; background: rgba(0,0,0, 0.5); margin: 0;}
+    article.artigo main {padding: 20px;}
+    article.artigo .post_image {width: 100%;}
+    article.artigo p {font-size: 1.1em; line-height: 1.25em; margin-bottom: 25px;}
 }
 @media screen and (max-width: 768px) {
     .header-logo {float: none; margin: 0 auto;}
@@ -128,6 +134,10 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
     .last-news article img {width: 100%;}
     .barra-lateral .title-section {font-size: 1.2em;}
     .mais-lidas img{ width: 100%; margin-right: 0; margin-bottom: 10px;}
+
+    article.artigo {width: 100%;}
+    article.artigo header h1 {padding: 10px;}
+    article.artigo main {padding: 10px;}
 }
 @media screen and (max-width: 480px) {
     .header-banner {display: none;}
