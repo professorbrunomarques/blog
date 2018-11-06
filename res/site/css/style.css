@@ -87,6 +87,8 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
 .comments input:not([type="submit"]), .comments textarea{ font-size: 1em; width:100%; padding: 5px 8px; font-family: "Candara", verdana, sans-serif;}
 .comments input[type="submit"]{padding: 8px 12px; color: #fff; background: #431F1F; border: 0; cursor: pointer; font-family: "Candara", verdana, sans-serif;}
 .comments input[type="reset"]{padding: 8px 12px; color: #fff; background: #431F1F; border: 0; cursor: pointer; width: initial;}
+.replies {list-style: none; margin-left: 20px;}
+.replies li {background: #fff; border-bottom: 1px solid #431F1F; margin-bottom: 10px;}
 
 .card {width: 25%; float: left; padding: 10px;}
 .card:hover .card-body{background-color: rgb(250, 250, 250)}

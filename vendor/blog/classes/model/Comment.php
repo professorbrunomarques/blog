@@ -15,14 +15,29 @@ class Comment extends Model {
             ":post_id"=>$post_id
         ));
     }
+    public static function listAllComments(int $post_id):array
+    {
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM tb_comments WHERE post_id = :post_id AND comment_replyto = 0", array(
+            ":post_id"=>$post_id
+        ));
+    }
+    public static function listAllReply(int $comment_id){
+        $sql = new Sql();
+        return $sql->select("SELECT * FROM tb_comments WHERE comment_replyto = :comment_id", array(
+            ":comment_id" => $comment_id
+        ));
+    }
 
     public function save()
     {
         $sql = new Sql();
-        $sql->query("INSERT INTO tb_comments (comment_text, post_id, id_user) VALUES (:comment_text, :post_id, :id_user)", array(
+        $sql->query("INSERT INTO tb_comments (comment_text, post_id, comment_user, comment_email, comment_replyto) VALUES (:comment_text, :post_id, :comment_user, :comment_email, :comment_replyto)", array(
             ":comment_text"=>$this->getcomment_text(),
             ":post_id"=>$this->getpost_id(),
-            ":id_user"=>$this->getid_user()
+            ":comment_user"=>$this->getcomment_user(),
+            ":comment_email"=>$this->getcomment_email(),
+            ":comment_replyto"=>$this->getcomment_replyto()
         ));
     }
     public function update()

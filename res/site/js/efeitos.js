@@ -9,7 +9,8 @@ function responder(nome, id){
 function cancelReply(){
     document.getElementById('replyto_text').style.display='none';
     document.getElementById('btn_submit').value = "Enviar Comentário";
-    document.getElementById('btn_reset').style.display='none'; 
+    document.getElementById('btn_reset').style.display='none';
+    document.getElementById('replyto').value = 0; 
 }
 
 $(document).ready(function() {

@@ -146,8 +146,58 @@ $app->get("/category/:cat_name", function(string $cat_name){
 $app->get("/post/:post_name", function($post_name){
     require_once("./vendor/blog/functions.php");
     $post = Post::getPostByName($post_name);
+    $comments = Comment::listAllComments($post["post_id"]);
+    
+    $html = "";
+    foreach ($comments as $comment) {
+        $html.= 
+        "<li class='clearfix'>
+        <div class='comment_user_photo float-left'><img src='".get_gravatar($comment['comment_email'])."'></div>
+        <div class='comment_text float-right'>
+            <h3><b>".$comment["comment_user"]." em ".datePt_Br($comment["comment_date"])." comentou:</b></h3>
+            <p>".$comment["comment_text"]."</p>
+            <a href='' class='replyto' onclick='responder(\"".$comment["comment_user"]."\",".$comment["comment_id"]."); return false;'>Responder</a>
+        </div>
+        </li>";
+        $replies = Comment::listAllReply($comment["comment_id"]);
+        if(count($replies) > 0){
+            $html.= "<ul class='replies'>";
+            foreach ($replies as $reply) {
+                $html.= 
+                "<li class='clearfix'>
+                <div class='comment_user_photo float-left'><img src='".get_gravatar($reply['comment_email'])."'></div>
+                <div class='comment_text float-right'>
+                    <h3><b>".$reply["comment_user"]." em ".datePt_Br($reply["comment_date"])." respondeu:</b></h3>
+                    <p>".$reply["comment_text"]."</p>
+                </div>
+                </li>";
+            }
+            $html.="</ul>";
+        }
+
+    }
+    
     $page = new Page($post);
-    $page->setTpl("posts", $post);
+    $page->setTpl("posts", array(
+        "post"=>$post,
+        "comments"=>$html
+    ));
+ });
+
+ $app->post("/post/:post_name", function($post_name){
+    require_once("./vendor/blog/functions.php");
+    $post = Post::getPostByName($post_name);
+
+    $comment = new Comment();
+    $data = array_map("strip_tags", $_POST);
+    $data = array_map("trim",$data);
+    $data["post_id"] = $post["post_id"];
+    $comment->setData($data);
+    $comment->save();
+
+    header("Location: /post/$post_name");
+    exit;
+    
  });
 
  //ROTAS PARA TESTES

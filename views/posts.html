@@ -1,41 +1,26 @@
 <main class="content clearfix">
     <article class="artigo">
         <header>
-            <img class="post_image" src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post_image}&w=1000&h=400&a=t" />
-            <h1 class="animated fadeIn delay-2s">{$post_title}</h1>
+            <img class="post_image" src="/vendor/gabrielgil/timthumb/timthumb.php?src={$post.post_image}&w=1000&h=400&a=t" />
+            <h1 class="animated fadeIn delay-2s">{$post.post_title}</h1>
         </header>
         <main>
-            <p><b>Publicado por:</b> {$post_author} | <b>Postado em:</b> <time>{function="datePt_Br($post_date)"}</time></p>
-            <a href="/">Home</a> | <a href="/category/{$cat_name}">{$cat_title}</a>
-            {$post_text}
+            <p><b>Publicado por:</b> {$post.post_author} | <b>Postado em:</b> <time>{function="datePt_Br($post.post_date)"}</time></p>
+            <a href="/">Home</a> | <a href="/category/{$post.cat_name}">{$post.cat_title}</a>
+            {$post.post_text}
         </main>
         <footer>
             <div class="comments">
                 <h2>Comentários</h2>
                 <div class="content-comments">
                     <ul>
-                        <li class="clearfix">
-                            <div class="comment_user_photo float-left"><img src="/res/admin/dist/img/avatar.png"></div>
-                            <div class="comment_text float-right">
-                                <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
-                                <a href="" class="replyto" onclick="responder('Bruno',1); return false;">Responder</a>
-                            </div>
-                        </li>
-                        <li class="clearfix">
-                            <div class="comment_user_photo float-left"><img src="/res/admin/dist/img/avatar.png"></div>
-                            <div class="comment_text float-right">
-                                <h3><b>Fulano comentou:</b><span>a X horas atrás</span></h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus sunt dignissimos vel ut quae distinctio vitae odio delectus nam, aliquid illum quas esse enim optio inventore quo odit in accusantium.</p>
-                                <a href="" class="replyto" onclick="responder('MARIA',2); return false;">Responder</a>
-                            </div>
-                        </li>
+                        {$comments}
                     </ul>
                 </div>
-                <form action="/post/{$post_name}/add-comment" id="form" method="POST">
+                <form action="/post/{$post.post_name}" id="form" method="POST">
                     <div class="clearfix">
                         <p id="replyto_text" style="display:none;"></p>
-                        <input type="hidden" name="replyto" id="replyto" readonly>
+                        <input type="hidden" name="comment_replyto" id="replyto" value="0" readonly>
                         <div class="w-50 float-left">
                             <label>
                                 <span>Nome</span>
