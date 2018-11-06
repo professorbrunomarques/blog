@@ -14,3 +14,8 @@ function Words(string $texto, int $limite, $ponteiro = null) {
 
     return $newWord;
 }
+
+function datePt_Br($data){
+    return strftime('%e de %B de %Y às %H:%M', 
+            strtotime($data));
+}

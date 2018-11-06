@@ -1,4 +1,7 @@
 <?php
+ setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+ date_default_timezone_set('America/Sao_Paulo'); 
+
 use \Blog\Page;
 use \Blog\PageAdmin;
 use \Blog\model\Post;
@@ -141,6 +144,7 @@ $app->get("/category/:cat_name", function(string $cat_name){
 });
 // EXIBIR POST NO SITE
 $app->get("/post/:post_name", function($post_name){
+    require_once("./vendor/blog/functions.php");
     $post = Post::getPostByName($post_name);
     $page = new Page($post);
     $page->setTpl("posts", $post);
@@ -148,22 +152,6 @@ $app->get("/post/:post_name", function($post_name){
 
  //ROTAS PARA TESTES
  $app->get("/teste", function(){
-     //var_dump(Comment::listAll(3));
-     
-     
-     
-     $dados = [
-        "comment_text"=>"Batata de Marechal",
-        "comment_id"=>3 
-     ];
-     
-     $comment = new Comment();
-     $comment->setData($dados);
-     $comment->update();
-     
-     // TESTE DO SAVE
-     /* $res = $comment->save();
-     echo "SALVO COM SUCESSO!<br>";
-     var_dump($res); */
-
+   
+    echo strftime('%A, %d de %B de %Y', strtotime('today'));
  });

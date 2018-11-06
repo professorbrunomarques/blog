@@ -5,7 +5,7 @@
             <h1 class="animated fadeIn delay-2s">{$post_title}</h1>
         </header>
         <main>
-            <p><b>Publicado por:</b> {$post_author} em <time>{function="date('d/m/Y H:i:s',strtotime($post_date))"}</time></p>
+            <p><b>Publicado por:</b> {$post_author} | <b>Postado em:</b> <time>{function="datePt_Br($post_date)"}</time></p>
             <a href="/">Home</a> | <a href="/category/{$cat_name}">{$cat_title}</a>
             {$post_text}
         </main>
