@@ -8,6 +8,7 @@
         <meta name="keywords" content="Notícias, curiosidades, saúde, esportes, etc"/>
         <link rel="stylesheet" href="/res/site/css/normalize.css"/>
         <link rel="stylesheet" href="/res/site/css/animate.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
         <link rel="stylesheet" href="/res/site/css/style.css"/>
         <!--[if lt IE 9]>
             <script src="js/html5shiv.js"></script>
@@ -20,8 +21,11 @@
                 <div class="header-logo"><img src="/res/site/images/logo.jpg" alt="[logo cafecomleite.com]" title="CaféComLeite.com"/></div>
                 <div class="header-banner"><a href="http://www.ifood.com.br" target="_blank"><img src="/res/site/images/iFood_banner_promo.jpg" alt="IFOOD" title="IFOOD"/></a></div>
             </div>
-            <nav>
+            <nav id="menu-principal">
                 <div class="header-menu clearfix">
+                    <div class="toggle-menu">
+                        <button><i class="fas fa-bars"></i></button>
+                    </div>
                     <ul class="menu">
                         <li><a href="/">Home</a></li>
                         {include="categories-menu"}
@@ -29,7 +33,7 @@
                     <div class="header-search">
                         <form action="#" method="get">
                             <input type="search" name="s" placeholder="Buscar por..." required/>
-                            <input type="submit" value="BUSCAR"/>
+                            <button><i class="fas fa-search"></i> <span>BUSCAR</span></button>
                         </form>
                     </div>
                 </div>    

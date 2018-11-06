@@ -11,3 +11,9 @@ function cancelReply(){
     document.getElementById('btn_submit').value = "Enviar Comentário";
     document.getElementById('btn_reset').style.display='none'; 
 }
+
+$(document).ready(function() {
+    $('.toggle-menu > button').click(function(){
+        $('.header-menu .menu').slideToggle();
+    });
+});

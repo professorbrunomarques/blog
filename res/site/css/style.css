@@ -34,15 +34,18 @@ body > header .content{padding: 20px 0;}
 .header-logo{max-width: 140px; width: 30%; float: left;}
 .header-banner{max-width: 850px; width: 70%; float: right;}
 
-header nav {background: #F60; padding: 10px 0;}
+header nav {background: #F60; padding: 10px 0; position: relative;}
 .header-menu {width: 90%; margin: 0 auto;}
+.header-menu .toggle-menu {display: none; border: none;}
+.header-menu .toggle-menu > button{background: #431F1F; color:#fff; border:none; width: 32px; height: 32px;}
 .header-menu .menu{float: left; list-style: none;}
 .menu li {display: inline-block;}
 .menu li a {text-decoration: none; padding: 8px 12px; display: inline-block; color: #FFF;}
 .menu li a:hover {background: #431F1F;}
-.header-menu .header-search {float: right;}
+.header-menu .header-search {float: right; position: absolute; top: 8px; right: 35px;}
 .header-search input { padding: 5px 8px; }
-.header-search input[type="submit"]{border:0; background: #431F1F; color: #FFF; border-radius: 50px; cursor: pointer; padding: 8px 12px}
+.header-search button{border:0; background: #431F1F; color: #FFF; border-radius: 50px; cursor: pointer; padding: 8px 12px}
+
 
 main {padding: 20px 0;}
 .main-content{width: 60%; margin-right:5%; float: left;}
@@ -99,17 +102,38 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
 .pagination li a {text-decoration: none; display: block; font-size: 1.25em; width: 30px; height: 30px; border: 1px solid #431F1F; color: #431F1F}
 .pagination li a:hover{background: #431F1F; color: #FFF;}
 
-/* Small devices (landscape phones, 576px and up)*/
-@media (max-width: 576px) {  
-    
+@media screen and (max-width: 980px) {
+    h1 {font-size: 2em; font-weight: 300;}
+    .header-banner{margin-top: auto;}
+
+    .header-menu .toggle-menu{display: block;}
+    .header-menu .menu {float: none; display: none; margin-top: 10px;}
+    .header-menu .menu li {display: block; border-top: 1px dotted #431F1F;}
+    .header-menu .menu li a {display: block; text-align: center;}
+
+    .destaque .tagline {font-size: 1.125em;}
+    .last-news article h1 {font-size: 1em;}
+
+    .barra-lateral .title-section {font-size: 1.5em;}
+    .mais-lidas article h1 {font-size: 1em;}
 }
+@media screen and (max-width: 768px) {
+    .header-logo {float: none; margin: 0 auto;}
+    .header-banner {float: none; margin: 10px auto;}
+    h1 {font-size: 1.5em; font-weight: 300;}
 
-/* Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) { 
+    .destaque .tagline {font-size: 1.125em;}
 
+    .last-news article {width: 100%; margin-bottom: 2%; margin-right: 0; float: none;}
+    .last-news article img {width: 100%;}
+    .barra-lateral .title-section {font-size: 1.2em;}
+    .mais-lidas img{ width: 100%; margin-right: 0; margin-bottom: 10px;}
 }
-
-/* Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {
-    
- }
+@media screen and (max-width: 480px) {
+    .header-banner {display: none;}
+    .header-search input { width: 170px; }
+    .header-search button span{display: none;}
+    .main-content {width: 100%;}
+    .barra-lateral{width: 100%;}
+    .header-search {float: none; position: relative;}
+}
