@@ -12,11 +12,15 @@
         <footer>
             <div class="comments">
                 <h2>Comentários</h2>
-                <div class="content-comments">
+                {if="$comments"}
+                <div class="content-comments" id="comments">
                     <ul>
                         {$comments}
                     </ul>
                 </div>
+                {else}
+                <p>Ainda não há nenhum comentário para essa postagem, seja o primeiro!</p>
+                {/if}
                 <form action="/post/{$post.post_name}" id="form" method="POST">
                     <div class="clearfix">
                         <p id="replyto_text" style="display:none;"></p>
