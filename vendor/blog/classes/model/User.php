@@ -22,7 +22,7 @@ class User extends Model {
         return $total[0]["total"];
     }
 	
-	public static function login($login, $password):User
+	public static function login($login, $password)
 	{
 
 		$db = new Sql();
@@ -32,7 +32,8 @@ class User extends Model {
 		));
 
 		if (count($results) === 0) {
-			throw new \Exception("Não foi possível fazer login.");
+			//throw new \Exception("Não foi possível fazer login.");
+			$_SESSION["ERROR"] = "Não foi possível fazer o login.";
 		}
 
 		$data = $results[0];
@@ -48,7 +49,8 @@ class User extends Model {
 
 		} else {
 
-			throw new \Exception("Não foi possível fazer login.");
+			//throw new \Exception("Não foi possível fazer login.");
+			$_SESSION["ERROR"] = "Não foi possível fazer o login.";
 
 		}
 

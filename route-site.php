@@ -47,18 +47,34 @@ $app->get('/admin', function(){
 });
 $app->get('/admin/login', function(){
     
+    if(isset($_SESSION["ERROR"])){
+        $erro = "
+        <div class='alert alert-danger alert-dismissible'>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        <h4><i class='icon fa fa-ban'></i> Alerta!</h4>
+        ".$_SESSION["ERROR"]."
+        </div>";
+    }else{
+        $erro = "";
+    }
+    unset($_SESSION["ERROR"]);
+    
     $page = new PageAdmin([
         "header"=>false,
         "footer"=>false
     ]);
-    $page->setTpl("login");
+    $page->setTpl("login", array(
+        "error"=>$erro
+    ));
 
 });
 $app->post('/admin/login', function(){
     
-    User::login($_POST["login"], $_POST["password"]);
-    
-    header("location: /admin");
+    if(!User::login($_POST["login"], $_POST["password"])){
+        header("location: /admin/login");
+    }else{
+        header("location: /admin");
+    }
     exit();
 });
 
