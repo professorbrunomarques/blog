@@ -1,0 +1,37 @@
+<main class="content clearfix">
+    <section class="category">
+        <header>
+            <h1>Resultado da busca por: {$busca}</h1>
+            <hr>
+        </header>
+        <main class="cards clearfix">
+            {if="$posts != NULL"}
+            {loop="$posts"}
+            <a href="/post/{$value.post_name}">
+            <div class="card zoom">
+                <div class="card-image">
+                    <div class="card-date">{function="date('d/m/Y',strtotime($value.post_date))"}</div>
+                    <img src="/vendor/gabrielgil/timthumb/timthumb.php?src={$value.post_image}&w=320&h=180" alt="">
+                </div>
+                <div class="card-body">
+                    <p>{$value.post_title}</p>
+                    <!-- <a class="btn" href="/post/{$value.post_name}">Leia mais</a> -->
+                </div>    
+            </div>
+            </a>
+            {/loop}
+            {else}
+                {include="sorry"}
+            {/if}
+        </main>
+        <footer>
+            <nav>
+                <ul class="pagination">
+                    {loop="$pages"}
+                    <li><a href="{$value.link}">{$value.page}</a></li>
+                    {/loop}
+                </ul>
+            </nav>
+        </footer>
+    </section>
+</main>

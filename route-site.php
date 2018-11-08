@@ -7,6 +7,7 @@ use \Blog\PageAdmin;
 use \Blog\model\Post;
 use \Blog\model\User;
 use \Blog\model\Category;
+use \Blog\model\Search;
 use \Blog\model\Comment;
 use \Blog\helper\Check;
 
@@ -142,10 +143,42 @@ $app->get("/category/:cat_name", function(string $cat_name){
         "pages"=>$pages
         ]);
 });
+//Exibe o resultado de uma busca
+$app->get("/search/", function(){
+    
+    $searchfor = $_GET;
+
+    //Pega a página atual
+    $page = (isset($_GET["page"]))? (int)$_GET["page"]: 1;
+
+    //Faz a paginação dos dados
+    $search = new Search();
+    $search->setData($searchfor);
+    $pagination = $search->getPostsPage($page);
+    $pages = [];
+    if($pagination['pages'] > 1){
+        for ($i=1; $i <= $pagination['pages']; $i++) { 
+            array_push($pages,[
+                'link'=>'/search/?search='.$search->getsearch().'&page='.$i,
+                'page'=>$i
+            ]);
+        }
+    }
+    $page = new Page();
+    $page->setTpl("search", [
+        "posts"=>$pagination["data"], 
+        "search"=>$search,
+        "busca"=>$search->getsearch(),
+        "pages"=>$pages
+        ]);
+});
+
 // EXIBIR POST NO SITE
 $app->get("/post/:post_name", function($post_name){
     require_once("./vendor/blog/functions.php");
     $post = Post::getPostByName($post_name);
+    
+    //Verificando se existe comentários e exibindo
     $comments = Comment::listAllComments($post["post_id"]);
     
     $html = "";
@@ -176,7 +209,7 @@ $app->get("/post/:post_name", function($post_name){
         }
 
     }
-    
+    //Exibe a página
     $page = new Page($post);
     $page->setTpl("posts", array(
         "post"=>$post,
@@ -184,6 +217,7 @@ $app->get("/post/:post_name", function($post_name){
     ));
  });
 
+ //Adicionando o comentário
  $app->post("/post/:post_name", function($post_name){
     require_once("./vendor/blog/functions.php");
     $post = Post::getPostByName($post_name);
@@ -195,7 +229,7 @@ $app->get("/post/:post_name", function($post_name){
     $comment->setData($data);
     $comment->save();
 
-    header("Location: /post/$post_name");
+    header("Location: /post/$post_name#comments");
     exit;
     
  });
