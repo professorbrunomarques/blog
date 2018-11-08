@@ -95,7 +95,7 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
 .card-body {margin-top: -5px; border: 1px solid #e3e3e3; padding: 10px; text-align: center;}
 .card-body p {color:#431F1F; font-size: 1em; line-height: 1.5em; margin-bottom: 25px; min-height: 86px; text-align: left;}
 .card-imgage{position: relative;}
-.card-imgage img {display: block; margin-bottom:10px;}
+.card-imgage img {display: block; margin-bottom:10px; width: 100%;}
 .card-date{background: rgba(67, 31, 31, 0.698); color: #FFF; position: absolute; padding: 10px;}
 .card-body a.btn {background: #431F1F; color: #FFF; text-decoration:none;  padding: 8px 12px; display: inline-block;}
 
@@ -132,6 +132,7 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
 
     .destaque .tagline {font-size: 1.125em;}
 
+
     .last-news article {width: 100%; margin-bottom: 2%; margin-right: 0; float: none;}
     .last-news article img {width: 100%;}
     .barra-lateral .title-section {font-size: 1.2em;}
@@ -140,6 +141,9 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
     article.artigo {width: 100%;}
     article.artigo header h1 {padding: 10px;}
     article.artigo main {padding: 10px;}
+
+    .card {width: 50%;}
+    .card-imgage img {width: 100%;}
 }
 @media screen and (max-width: 480px) {
     .header-banner {display: none;}
@@ -148,4 +152,11 @@ article.artigo main img {display: block; margin: 0 auto 25px auto;}
     .main-content {width: 100%;}
     .barra-lateral{width: 100%;}
     .header-search {float: none; position: relative;}
+
+    .destaque .tagline {font-size: 1em;}
+
+    article.artigo header h1 {font-size: 1em;}
+
+    .card {width: 100%;}
+    .card-imgage img {width: 100%;}
 }
