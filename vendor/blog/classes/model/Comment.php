@@ -8,6 +8,15 @@ use \Blog\model\Post;
 
 class Comment extends Model {
 
+    /**
+     * Retorna o total de Comentários
+     */
+    public static function getTotalComments(){
+        $sql = new Sql();
+        $total =  $sql->select("SELECT count(*) as total FROM tb_comments");
+        return $total[0]["total"];
+    }
+
     public static function listAll(int $post_id):array
     {
         $sql = new Sql();

@@ -9,12 +9,21 @@ use \Blog\Model;
 
 class Post extends Model {
     /**
+     * Retorna o total de Postagens
+     */
+    public static function getTotalPosts(){
+        $sql = new Sql();
+        $total =  $sql->select("SELECT count(*) as total FROM tb_posts");
+        return $total[0]["total"];
+    }
+
+    /**
      * Lista todas as postagens ordenadas em ordem decrescente 
      */
-    public static function listAll()
+    public static function listAll(int $itensPerPage = 10)
     {
         $sql = new Sql;
-        return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC");
+        return $sql->select("SELECT * FROM tb_posts ORDER BY post_id DESC LIMIT $itensPerPage");
     }
 
     public static function getPosts(int $itensPerPage)

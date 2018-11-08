@@ -11,7 +11,16 @@ class User extends Model {
 
 	const SESSION = "User";
 	const SECRET = "123qwe"; 
-    const CIPHER = "AES-256-CBC";
+	const CIPHER = "AES-256-CBC";
+	
+	/**
+     * Retorna o total de Usuários
+     */
+    public static function getTotalUsers(){
+        $sql = new Sql();
+        $total =  $sql->select("SELECT count(*) as total FROM tb_users");
+        return $total[0]["total"];
+    }
 	
 	public static function login($login, $password):User
 	{

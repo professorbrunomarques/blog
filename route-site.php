@@ -26,7 +26,23 @@ $app->get('/', function(){
 $app->get('/admin', function(){
     User::verifyLogin();
     $page = new PageAdmin();
-    $page->setTpl("index");
+
+    //CONTADORES 
+    $categorias = Category::getTotalCat();
+    $posts = Post::getTotalPosts();
+    $users = User::getTotalUsers();
+    $comments = Comment::getTotalComments();
+
+    //ÚLTIMAS POSTAGENS
+    $lastPosts = Post::listAll(5);
+
+    $page->setTpl("index", array(
+        "TotalCat"=>$categorias,
+        "TotalPosts"=>$posts,
+        "TotalUsers"=>$users,
+        "TotalComments"=>$comments,
+        "posts"=>$lastPosts
+    ));
 
 });
 $app->get('/admin/login', function(){
@@ -155,6 +171,7 @@ $app->get("/search/", function(){
     $search = new Search();
     $search->setData($searchfor);
     $pagination = $search->getPostsPage($page);
+    
     $pages = [];
     if($pagination['pages'] > 1){
         for ($i=1; $i <= $pagination['pages']; $i++) { 
@@ -167,7 +184,6 @@ $app->get("/search/", function(){
     $page = new Page();
     $page->setTpl("search", [
         "posts"=>$pagination["data"], 
-        "search"=>$search,
         "busca"=>$search->getsearch(),
         "pages"=>$pages
         ]);

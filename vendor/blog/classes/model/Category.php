@@ -8,6 +8,14 @@ use \Blog\Model;
 class Category extends Model {
     
     /**
+     * Retorna o total de categorias
+     */
+    public static function getTotalCat(){
+        $sql = new Sql();
+        $total =  $sql->select("SELECT count(*) as total FROM tb_categories");
+        return $total[0]["total"];
+    }
+    /**
      * Retorna um array com todos os dados da tabela categorias.
      * 
      * @return array com todas as categorias.
