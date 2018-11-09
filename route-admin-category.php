@@ -56,3 +56,10 @@ $app->post('/admin/categories/:cat_id', function($cat_id){
     header("Location: /admin/categories");
     exit();
 });
+$app->get('/admin/categories/:cat_id/delete', function($cat_id){
+    User::verifyLogin();
+    $cat = new Category();
+    $cat->deleteCatById($cat_id);
+    header("Location: /admin/categories");
+    exit();
+});
