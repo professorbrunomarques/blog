@@ -4,7 +4,8 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userspasswordsrecoveries_create` (`id_user` INT, `user_ip` VARCHAR(45))  BEGIN
+DROP PROCEDURE IF EXISTS `sp_userspasswordsrecoveries_create`$$
+CREATE PROCEDURE `sp_userspasswordsrecoveries_create` (`id_user` INT, `user_ip` VARCHAR(45))  BEGIN
 	
 	INSERT INTO tb_userspasswordsrecoveries (id_user, user_ip)
     VALUES(id_user, user_ip);
@@ -16,88 +17,95 @@ END$$
 
 DELIMITER ;
 
-CREATE TABLE IF NOT EXISTS `tb_categories` (
-  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_categories`;
+CREATE TABLE `tb_categories` (
+  `cat_id` int(11) NOT NULL,
   `cat_title` varchar(250) NOT NULL,
   `cat_name` varchar(250) NOT NULL,
   `cat_desc` varchar(250) DEFAULT NULL,
-  `cat_parent` int(11) DEFAULT '0',
-  PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `cat_parent` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `tb_categories` (`cat_id`, `cat_title`, `cat_name`, `cat_desc`, `cat_parent`) VALUES
-(1, 'Notícias', 'noticias', 'Categoria genérica para teste', 0),
-(2, 'Tecnologia', 'tecnologia', 'Noticias de técnologia em geral', 1),
-(3, 'Mundo', 'mundo', 'Notícias sobre o Mundo', 0),
-(4, 'Política', 'politica', 'Notícias sobre Política', 1);
+(1, 'Notícias', 'noticias', 'Categoria genérica para teste', 0);
 
-CREATE TABLE IF NOT EXISTS `tb_comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_comments`;
+CREATE TABLE `tb_comments` (
+  `comment_id` int(11) NOT NULL,
   `comment_text` text NOT NULL,
   `post_id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `comment_user` varchar(100) NOT NULL,
+  `comment_email` varchar(250) NOT NULL,
   `comment_replyto` int(11) DEFAULT NULL,
   `comment_status` tinyint(1) NOT NULL DEFAULT '0',
-  `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `tb_comments` (`comment_id`, `comment_text`, `post_id`, `id_user`, `comment_replyto`, `comment_status`, `comment_date`) VALUES
-(1, 'Teste de comentário', 3, 1, NULL, 0, '2018-11-01 16:12:20'),
-(2, 'Teste de comentário feito pela classe Comment.', 3, 1, NULL, 0, '2018-11-01 16:39:18'),
-(3, 'Batata de Marechal', 3, 1, NULL, 0, '2018-11-01 16:40:35'),
-(4, 'Teste de comentário feito pela classe Comment.', 3, 1, NULL, 0, '2018-11-01 16:42:17');
-
-CREATE TABLE IF NOT EXISTS `tb_posts` (
-  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_posts`;
+CREATE TABLE `tb_posts` (
+  `post_id` int(11) NOT NULL,
   `post_title` varchar(250) NOT NULL,
   `post_name` varchar(250) NOT NULL,
   `post_image` varchar(250) NOT NULL,
   `post_author` varchar(250) NOT NULL,
   `post_text` text NOT NULL,
-  `post_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `post_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `cat_id` int(11) DEFAULT NULL,
-  `post_status` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `post_status` tinyint(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `tb_posts` (`post_id`, `post_title`, `post_name`, `post_image`, `post_author`, `post_text`, `post_date`, `cat_id`, `post_status`) VALUES
-(3, 'Bolsonaro e aliados se reúnem hoje para definir 50 nomes à transição', 'bolsonaro-e-aliados-se-reunem-hoje-para-definir-50-nomes-a-transicao', '/uploads/2018/10/30/bolsonaro-e-aliados-se-reunem-hoje-para-definir-50-nomes-a-transicao.jpg', 'Bruno Marques', '<p></p><p>São Paulo – O presidente <strong><a target=\"_blank\" rel=\"nofollow\" href=\"https://exame.abril.com.br/noticias-sobre/jair-bolsonaro/\">Jair Bolsonaro</a></strong> deve se reunir nesta terça-feira, 30, no Rio de Janeiro, com seus aliados para definir os nomes da equipe de transição. Conforme uma lei criada em 2002, que trata do processo de passagem de um governo para outro, o presidente eleito poderá indicar 50 integrantes para a equipe de transição, que podem receber salários de até 16.000 reais.</p><p>Devem participar do encontro o economista <strong><a target=\"_blank\" rel=\"nofollow\" href=\"https://exame.abril.com.br/noticias-sobre/paulo-guedes/\">Paulo Guedes</a></strong>, anunciado como Ministro da Fazenda, e o deputado federal <strong>Onyx Lorenzoni</strong>, que chefiará a Casa Civil, e é o coordenador da equipe de transição. É esperada também a presença de Gustavo Bebiano, ex-presidente do PSL, e do vice-presidente, general Mourão – além dos três filhos do presidente, o vereador Carlos, o senador eleito Flávio e o deputado reeleito Eduardo.</p><p>Em entrevistas a emissoras de televisão, Bolsonaro disse que pretende convidar o juiz Sergio Moro para ocupar o cargo de Ministro da Justiça, ou mesmo indicá-lo ao Supremo Tribunal Federal. “Se tivesse falado isso lá atrás, durante a campanha, soaria oportunista, mas agora sim: pretendo, sim (convidar Moro), não só para o Supremo, mas quem sabe para o Ministério da Justiça. Pretendo conversar previamente com ele. Com toda certeza será uma pessoa de extrema importância (no governo)”, disse Bolsonaro na noite de segunda, 29, em sua primeira entrevista após a eleição, para a TV Record.</p><p>A expectativa é de que os nomes que irão compor a linha de frente do governo Bolsonaro devem ser anunciados nos próximos 30 dias. Antes disso, porém, será necessário definir o tamanho desse governo. Ao longo da campanha, Bolsonaro afirmava que cortaria o número de pastas, permanecendo assim 15. A fusão do Ministério da Agricultura com o do Meio Ambiente, amplamente anunciada, já deu para trás por pressão dos próprios ruralistas. Dos atuais 29 ministérios, 19 devem permanecer.</p><br><p></p>', '2018-10-30 12:40:47', 4, 1),
-(4, 'Funcionárias do Google planejam protesto contra casos de assédio sexual', 'funcionarias-do-google-planejam-protesto-contra-casos-de-assedio-sexual', '/uploads/2018/10/30/funcionarias-do-google-planejam-protesto-contra-casos-de-assedio-sexual.jpg', 'Bruno Marques', '<p></p><p>Funcionários do Google planejam para esta semana 1 protesto contra a má conduta de executivos –acusados de assédio sexual– e a resposta, considerada insuficiente, da empresa.</p><p>Cerca de 200 engenheiras de software do Google participam da organização, de acordo com o <a href=\"https://www.buzzfeednews.com/article/carolineodonovan/googles-female-engineers-walkout-sexual-harassment\" target=\"_blank\" rel=\"nofollow\"><em>BuzzFeed</em></a>, que noticiou as intenções de manifestação na 2ª feira (29.out). Os porta-vozes da empresa ainda não se pronunciaram.</p><p>Após a divulgação de 1 relatório que compila acusações de assédio por parte de funcionários da empresa, o CEO do Google, Sundar Pichai, tentou apaziguar os ânimos.</p><p>Na 6ª feira (26), usou o blog da empresa para comunicar que “<em>o Google atualizou sua política para exigir que todos os executivos divulguem qualquer relacionamento com colegas de trabalho, independentemente de denúncia ou da presença de conflitos</em>“. O comunicado foi emitido em conjunto com o vice-presidente de operações Eileen Naughton.</p><p>O CEO também destacou que 48 pessoas foram desligadas nos últimos 2 anos por assédio sexual, incluindo 13 que eram gerentes sêniores ou superiores. “<em>Queremos garantir que analisamos todas as queixas sobre assédio sexual ou conduta inadequada, investigamos e agimos</em>“, acrescentam.</p><p>Ainda não está definido o momento da paralisação, mas os organizadores propõem realizar o protesto até 5ª feira (1º de novembro). Além da má conduta dos executivos, os funcionários também têm outras reivindicações, que não foram apresentadas pelos líderes da marcha.</p><p>O <em>New York Times</em> revelou, na semana passada, que o Google pagou cerca de US$ 90 milhões para a saída do criador do Android, Andy Rubin, depois que uma funcionária o acusou de coagi-la a fazer sexo oral em 1 quarto de hotel em 2013.</p><p>Rubin chamou a notícia de “<em>campanha de difamação</em>” e disse que “<em>nunca coagiu mulher nenhuma a fazer sexo oral em quarto de hotel</em>“. O jornal ainda afirma que outros executivos tiveram o mesmo tipo de tratamento indulgente após episódios semelhantes.</p><br><p></p>', '2018-10-30 12:43:08', 1, 1),
-(5, 'Novo drone da DJI pode ser usado para auxiliar em missões de resgate', 'novo-drone-da-dji-pode-ser-usado-para-auxiliar-em-missoes-de-resgate', '/uploads/2018/10/30/novo-drone-da-dji-pode-ser-usado-para-auxiliar-em-missoes-de-resgate.jpg', 'Bruno Marques', '<p>A DJI anunciou o Mavic 2 Enterprise. Parece muito um modelo convencional voltado para os consumidores e com o visual da série Mavic 2, mas ele pode carregar objetos, o que dá aos pilotos novas ferramentas no ar. Podemos dizer que é um drone regular com câmera e que conta com superpoderes que podem auxiliar a salvar vidas.<br><br>• <a href=\"https://gizmodo.uol.com.br/djis-mavic-2-serie-drones-cameras-potentes-sensores/\" target=\"_blank\" rel=\"nofollow\">Os drones da série Mavic 2, da DJI, vêm com câmeras mais potentes e vários sensores</a><br>• <a href=\"https://gizmodo.uol.com.br/dji-drones-mavic-2-brasil-trimestre/\" target=\"_blank\" rel=\"nofollow\">Novos drones Mavic 2 chegam ao Brasil no último trimestre — e é melhor rezar para o dólar não aumentar</a><br><br>O Mavic 2 Enterprise conta com um corpo dobrável na cor cinza. No entanto, além de contar com um sistema de câmera em seu nariz, o dispositivo também oferece a possibilidade de anexar acessórios no topo. Por ora, a companhia está lançando uma lanterna para missões de resgate com pouca luz, um alto-falante para operações de emergência e um sistema de farol para que o drone fique visível a uma distância de quase 5 km. Além disso, a DJI adicionou 24 GB de armazenamento no Mavic 2 Enterprise e um sistema de segurança que torna mais difícil os dados serem comprometidos se o drone cair nas mãos erradas.<br><br>\r\n \r\n\r\n <img alt=\"\" src=\"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBP5eQ0.img?h=450&amp;w=799&amp;m=6&amp;q=60&amp;o=f&amp;l=f\">\r\n\r\n\r\n © Fornecido por F451 Midi Ltda.\r\n \r\n\r\n\r\n<br>Esse novo drone conta com todos os recursos de performance da série Mavic 2. Então, ele tem uma câmera de 12 megapixels com zoom ótico de 2x e zoom digital de 3x. O Mavic 2 Enterprise também conta com o sistema autônomo e omnidirecional que evita a colisão com obstáculos. Ele conta também com autonomia de voo de 31 minutos e atinge velocidade máxima de 72 km/h. Em outras palavras, é um Mavic 2, mas com alguns truques adicionais.<br><br>Como indica o nome, a DJI tem como alvo o uso comercial de drones com o novo Mavic 2 Enterprise. Embora os primeiros acessórios indiquem que seja usado em situações de emergência e resgate, é possível imaginar um longo espectro de sensores que poderiam ser anexados ao Mavic 2 Enterprise. Ele poderia ser usado para inspecionar tubulações ou verificar o inventário de fábricas em um futuro próximo. Isso é o que torna essa ideia de drone modular tão interessante.<br><br>\r\n \r\n\r\n <img alt=\"\" src=\"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBP52yC.img?h=450&amp;w=799&amp;m=6&amp;q=60&amp;o=f&amp;l=f\">\r\n\r\n\r\n © Fornecido por F451 Midi Ltda.\r\n \r\n\r\n\r\n<br><br>Agora está claro que o novo drone da DJI é muito mais que um drone. A aeronave dobrável é agora uma plataforma completa. Isso não pode significar muito para quem curte tirar fotos bacanas de pôr do sol com o aparelho, mas a ideia de um drone de baixo custo que pode receber ferramentas e realizar trabalhos soa bastante interessante para várias indústrias. Todos esses três acessórios vêm em um bundle com o Mavic 2 Enterprise, que começa a ser vendido nesta segunda-feira (29) por a US$ 2.000.<br><br><em>Imagem do topo: DJI</em><br></p>', '2018-10-30 12:44:38', 1, 1),
-(6, 'Veneza fica totalmente submersa após temporal', 'veneza-fica-totalmente-submersa-apos-temporal', '/uploads/2018/10/30/veneza-fica-totalmente-submersa-apos-temporal.jpg', 'Bruno Marques', '<p></p><p>A cidade italiana Veneza ficou totalmente submersa nesta segunda-feira (29) após forte temporal. A inundação foi causada por uma convergência de marés altas e um forte vento siroco (quente e seco). O nível da água chegou a 1,5 metro de altura em alguns pontos.</p><p>Na foto, pessoas caminham por uma passarela improvisada na inundada Praça São Marcos.</p><br><p></p>', '2018-10-30 12:45:47', 1, 1),
-(7, 'Trump pretende acabar com aquisição de cidadania para filhos de imigrantes nascidos nos EUA', 'trump-pretende-acabar-com-aquisicao-de-cidadania-para-filhos-de-imigrantes-nascidos-nos-eua', '/uploads/2018/10/30/trump-pretende-acabar-com-aquisicao-de-cidadania-para-filhos-de-imigrantes-nascidos-nos-eua.jpg', 'Bruno Marques', '<p></p><p>O presidente dos EUA, Donald Trump, quer acabar com a naturalização de crianças estrangeiras que nasceram em solo americano. </p><p>Trump teria feito o anúncio numa entrevista exclusiva para “Axios on HBO”, um documentário de quatro episódios que começará a ser transmitida no domingo (4) na TV americana. &nbsp;“Somos o único país do mundo onde uma pessoa chega, tem uma criança e ela se torna cidadão dos Estados Unidos por 85 anos com todas as vantagens”, declara Trump. “É ridículo e isso tem que acabar”. </p><p>Interrogado sobre como colocaria sua intenção em prática, Trump disse que faria uso de um simples decreto. “Sempre me disseram que era preciso uma emenda constitucional, mas podemos fazê-lo com uma lei no Congresso. E agora descobri que também posso fazer um decreto”, disse o presidente americano, que afirmou já ter conversado a respeito com seus conselheiros. </p><p><a href=\"http://br.rfi.fr/americas/20181030-vinda-de-trump-pittsburgh-para-visitar-local-de-massacre-divide-populacao-local\" target=\"_blank\" rel=\"nofollow\">A decisão de Trump poderia entrar em choque com as disposições da 14ª emenda da lei fundamental americana</a>, segundo a qual “toda pessoa nascida ou naturalizada nos Estados Unidos, e submetida à sua jurisdição, é cidadã dos Estados Unidos e do Estado onde reside”. </p><p><strong>Trump está visando eleições de meio mandato </strong></p><p>Os constitucionalistas conservadores afirmam que a Constituição é aplicada de maneira inapropriada há quarenta anos em razão da interpretação da frase “submetido à sua jurisdição”. Para eles, esta expressão diz respeito às pessoas detentoras de um Green Card e aos cidadãos americanos. Trump estima que os filhos de estrangeiros em situação irregular não podem adquirir a cidadania alegando o único motivo de terem nascido no solo americano. </p><p><a href=\"http://br.rfi.fr/americas/20181025-trump-vai-se-beneficiar-com-caso-de-pacotes-suspeitos-nos-eua-de-acordo-com-especi\" target=\"_blank\" rel=\"nofollow\">Faltando uma semana para as eleições de meio de mandato, Trump acredita que a questão migratória é a mais importante para mobilizar seus eleitores</a> e impedir que os democratas tomem conta da Câmara de representantes ou do Senado.</p><p>O número de crianças cujos pais estão em situação irregular nos EUA não parou de aumentar entre 1980 e 2006. Após chegar ao pico de 370.000, houve uma desaceleração, de acordo com um estudo do Pew Research Center em 2016. </p><br><p></p>', '2018-10-30 15:42:46', 1, 1),
-(8, 'Chuva, ventos e neve atingem a Europa; onze mortos na Itália', 'chuva-ventos-e-neve-atingem-a-europa-onze-mortos-na-italia', '/uploads/2018/10/30/chuva-ventos-e-neve-atingem-a-europa-onze-mortos-na-italia.jpg', 'Bruno Marques', '<p></p><p>Uma onda de mau tempo atingiu vários países europeus, incluindo a Itália, onde 11 pessoas morreram, enquanto dezenas de milhares de casas no continente ficaram sem energia nesta terça-feira.</p><p>Na Itália, além de cinco vítimas registradas na segunda-feira, um homem morreu em Veneto (nordeste) pela queda de uma árvore, bem como um bombeiro no sul do Tirol (norte). Uma mulher foi vítima de um deslizamento de terra e pedras em sua casa no norte de Trentino, enquanto outro homem faleceu enquanto praticava kitesurf perto de Cattolica, na costa do Adriático.</p><p>O corpo de um homem também foi recuperado na terça-feira no Lago Levico, no norte, segundo os bombeiros, e o corpo de outro homem foi encontrado à tarde em um riacho, também no norte do país. </p><p>Um homem segue desaparecido na Calábria, depois que seu barco foi encontrado na segunda-feira. Um corpo foi visto no mar, mas não pôde ser recuperado devido à tempestade.</p>\r\n \r\n\r\n <img alt=\"Destruio perto da cidade italiana de Gnova aps tempestade atingir a regio\" src=\"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBP7AbL.img?h=559&amp;w=799&amp;m=6&amp;q=60&amp;o=f&amp;l=f\">\r\n\r\n\r\n © Fornecido por AFP\r\n Destruição perto da cidade italiana de Gênova após tempestade atingir a região\r\n\r\n\r\n<p>De acordo com a imprensa italiana, cerca de 170 turistas e funcionários de hoteis estão presos no Col du Stelvio (norte), na fronteira entre a Itália e a Suíça, a mais de 2.700 metros acima do nível do mar, devido a uma forte nevasca.</p><p>Em Friuli (nordeste), 18.500 pessoas estão sem eletricidade e muitas estradas estão intransitáveis, de acordo com as autoridades locais.</p><p>Chuvas fortes acompanhadas por ventos de até 180 km/h em algumas áreas da Itália também resultaram em graves perturbações no tráfego. </p><p>Em Gênova, o aeroporto só reabriu por volta das 16h00 GMT (13h00 no horário de Brasília), enquanto as escolas da cidade estarão fechadas o dia todo, assim como em Roma e em muitos outros municípios italianos.</p><p>Essa onda de mau tempo causou na segunda-feira um nível histórico de \"acqua alta\" (água alta) em Veneza, com um pico de 1,56 metro, causando o fechamento da Praça de São Marcos.</p><p>Duas pinturas de Joan Miró também acabaram encharcadas por essa inundação excepcional.</p><p>Os países vizinhos da Itália também são afetados.</p><p>Na Áustria, parte do telhado da fortaleza medieval que domina Salzburgo foi arrancado durante esta madrugada devido a ventos superiores a 100 km/h.</p><p>Mais ao sul, a Defesa Civil pediu que os cerca de 500 moradores de Muhr não deixassem suas casas e se abrigassem nos andares superiores, em razão do transbordamento de um rio.</p><p>O mesmo alerta foi lançado em um vale perto da fronteira italiana, onde as barragens ameaçavam ceder sob a pressão da água.</p><p>\"Em várias décadas, nunca vi isso\", disse Martin Guggenberger, comandante do corpo de bombeiros de uma comuna deste setor, onde muitas estradas pequenas estão bloqueadas e cerca de 10 mil residências não têm eletricidade.</p><p>Na Eslovênia, país em \"alerta vermelho\" desde segunda-feira, uma pessoa que praticava windsurfer está desaparecida, enquanto na Croácia, a cidade portuária de Rijeka foi inundada e muitas conexões de balsas foram interrompidas.</p><p>No cantão suíço de Ticino, muitas estradas estão intransitáveis, inundadas ou bloqueadas pela queda de árvores.</p>\r\n \r\n\r\n <img alt=\"Restaurante  atingido pela fora do mar na Crsega\" src=\"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBP7m69.img?h=533&amp;w=799&amp;m=6&amp;q=60&amp;o=f&amp;l=f\">\r\n\r\n\r\n © Fornecido por AFP\r\n Restaurante é atingido pela força do mar na Córsega\r\n\r\n\r\n<p>Na França, onde 110.000 residências ficaram sem eletricidade nesta terça-feira à tarde, a neve que caiu no centro do país bloqueou mais de 2.000 veículos no Maciço Central.</p><p>Na Córsega, as autoridades estão avaliando os danos causados ??por rajadas de vento a 160 km/h.</p><p>Na Espanha, a queda de neve nas Astúrias (norte) causou problemas para tráfego, com 4.700 residências sem eletricidade, de acordo com as autoridades.</p><p>Na República Tcheca, o tráfego ferroviário foi interrompido esta manhã como resultado dos fortes ventos que causaram muitas quedas de árvores nas ferrovias e cerca de 30 mil pessoas estão sem eletricidade, segundo a estatal de eletricidade CEZ.</p><br><p></p>', '2018-10-30 16:13:27', 1, 1);
-
-CREATE TABLE IF NOT EXISTS `tb_users` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_users`;
+CREATE TABLE `tb_users` (
+  `id_user` int(11) NOT NULL,
   `login` varchar(100) NOT NULL,
   `password` varchar(250) NOT NULL,
   `name` varchar(100) NOT NULL,
   `level` int(11) NOT NULL DEFAULT '0',
   `email` varchar(250) NOT NULL,
-  `user_update` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+  `user_update` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `tb_users` (`id_user`, `login`, `password`, `name`, `level`, `email`, `user_update`) VALUES
-(1, 'bruno', '$2y$10$d4Ns2J9KkT1f.mD7yOZ1T.1IvTsdrFPORLiaF2qNZ2kfNYGOsG/FO', 'Bruno Marques', 1, 'bruno_s_marques@hotmail.com', '2018-10-31 23:06:35'),
-(12, 'samuca2', '$2y$10$xL8OSXUkzzxpDXzn.P5YV.sJRaL41v1ndBpHr1SS1pqI4ZrfPaAmq', 'Samuel', 1, 'samucarj@gmail.com', '0000-00-00 00:00:00'),
-(13, 'admin', '123456', 'admin', 1, 'profbrunomarques@gmail.com', '0000-00-00 00:00:00');
+(14, 'admin', '$2y$10$oQORs8nDGkQQSIXXWN6pdutO8vJqn/dOPSzfjWUZrV4zHP2ir1wNW', 'Administrador', 1, 'webmaster@seusite.com.br', '0000-00-00 00:00:00');
 
-CREATE TABLE IF NOT EXISTS `tb_userspasswordsrecoveries` (
-  `idrecovery` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_userspasswordsrecoveries`;
+CREATE TABLE `tb_userspasswordsrecoveries` (
+  `idrecovery` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `user_ip` varchar(45) NOT NULL,
   `dtrecovery` datetime DEFAULT NULL,
-  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idrecovery`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `tb_userspasswordsrecoveries` (`idrecovery`, `id_user`, `user_ip`, `dtrecovery`, `dtregister`) VALUES
-(1, 1, '127.0.0.1', '2018-10-31 17:45:23', '2018-10-31 20:44:50'),
-(2, 1, '127.0.0.1', '2018-10-31 18:05:48', '2018-10-31 21:05:16'),
-(3, 1, '127.0.0.1', '2018-10-31 18:12:11', '2018-10-31 21:11:53'),
-(4, 1, '127.0.0.1', '2018-10-31 18:27:29', '2018-10-31 21:26:47'),
-(5, 1, '127.0.0.1', '2018-10-31 23:06:34', '2018-11-01 02:06:04');
+
+ALTER TABLE `tb_categories`
+  ADD PRIMARY KEY (`cat_id`);
+
+ALTER TABLE `tb_comments`
+  ADD PRIMARY KEY (`comment_id`);
+
+ALTER TABLE `tb_posts`
+  ADD PRIMARY KEY (`post_id`);
+
+ALTER TABLE `tb_users`
+  ADD PRIMARY KEY (`id_user`);
+
+ALTER TABLE `tb_userspasswordsrecoveries`
+  ADD PRIMARY KEY (`idrecovery`);
+
+
+ALTER TABLE `tb_categories`
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `tb_comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `tb_posts`
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `tb_users`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+ALTER TABLE `tb_userspasswordsrecoveries`
+  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
